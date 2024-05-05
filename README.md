@@ -1,3 +1,3 @@
 Work in progress...
 
-This is a fully typesafe, app-free and performant Shopify app boilerplate that is designed to save store owners their monthly costs on Shopify apps and provide developers with the fastest shipment tools.
+This is a fully typesafe, app-free and performant Shopify app boilerplate that is designed to save store owners their monthly costs on Shopify apps and provide developers with the fastest shipping tools.
