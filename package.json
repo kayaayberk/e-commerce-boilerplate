@@ -6,26 +6,36 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "codegen": "graphql-codegen && graphql-codegen -p admin"
   },
   "dependencies": {
+    "@hookform/resolvers": "^3.3.4",
     "@next/bundle-analyzer": "^14.2.3",
+    "@radix-ui/react-label": "^2.0.2",
+    "@radix-ui/react-slot": "^1.0.2",
+    "@radix-ui/react-toast": "^1.1.5",
+    "@shopify/admin-api-client": "^0.2.9",
     "@shopify/shopify-api": "^10.0.0",
     "@shopify/storefront-api-client": "^0.3.4",
     "@t3-oss/env-nextjs": "^0.10.1",
     "@vercel/toolbar": "^0.1.14",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
+    "graphql": "^16.8.1",
     "lucide-react": "^0.378.0",
     "next": "14.2.3",
     "next-compose-plugins": "^2.2.1",
     "react": "^18",
     "react-dom": "^18",
+    "react-hook-form": "^7.51.4",
     "tailwind-merge": "^2.3.0",
     "tailwindcss-animate": "^1.0.7",
-    "zod": "^3.23.6"
+    "zod": "^3.23.6",
+    "zustand": "^4.5.2"
   },
   "devDependencies": {
+    "@shopify/api-codegen-preset": "^0.0.7",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
@@ -34,7 +44,6 @@
     "postcss": "^8",
     "prettier": "^3.2.5",
     "prettier-plugin-tailwindcss": "^0.5.14",
-    "tailwindcss": "^3.4.1",
-    "typescript": "^5"
+    "tailwindcss": "^3.4.1"
   }
 }
