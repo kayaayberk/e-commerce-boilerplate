@@ -19634,7 +19634,13 @@ export type InventoryAdjustQuantitiesInput = {
    *
    */
   reason: Scalars['String']['input'];
-  /** The reference document URI for the changes. Used to denote what's causing the change. */
+  /**
+   * A freeform URI that represents why the inventory change happened. This can be the entity adjusting inventory
+   * quantities or the Shopify resource that's associated with the inventory adjustment. For example, a unit in a
+   * draft order might have been previously reserved, and a merchant later creates an order from the draft order.
+   * In this case, the referenceDocumentUri for the inventory adjustment is a URI referencing the order ID.
+   *
+   */
   referenceDocumentUri?: InputMaybe<Scalars['String']['input']>;
 };
 
@@ -19708,7 +19714,13 @@ export type InventoryAdjustmentGroup = Node & {
   id: Scalars['ID']['output'];
   /** The reason for the group of adjustments. */
   reason: Scalars['String']['output'];
-  /** The reference document URI for the changes. Denotes what's causing the change. */
+  /**
+   * A freeform URI that represents why the inventory change happened. This can be the entity adjusting inventory
+   * quantities or the Shopify resource that's associated with the inventory adjustment. For example, a unit in a
+   * draft order might have been previously reserved, and a merchant later creates an order from the draft order.
+   * In this case, the referenceDocumentUri for the inventory adjustment is a URI referencing the order ID.
+   *
+   */
   referenceDocumentUri?: Maybe<Scalars['String']['output']>;
   /** The staff member associated with the inventory event. */
   staffMember?: Maybe<StaffMember>;
@@ -19801,7 +19813,7 @@ export type InventoryChange = {
   delta: Scalars['Int']['output'];
   /** The inventory item associated with this inventory change. */
   item?: Maybe<InventoryItem>;
-  /** The ledger document URI for the change. Denotes who the change is applied to. */
+  /** A URI that represents what the inventory quantity change was applied to. */
   ledgerDocumentUri?: Maybe<Scalars['String']['output']>;
   /** The location associated with this inventory change. */
   location?: Maybe<Location>;
@@ -19824,7 +19836,13 @@ export type InventoryChangeInput = {
   delta: Scalars['Int']['input'];
   /** Specifies the inventory item to which the change will be applied. */
   inventoryItemId: Scalars['ID']['input'];
-  /** The ledger document URI to which the quantity change is being applied. Not allowed for 'available' and required for other quantity names. */
+  /**
+   * A freeform URI that represents what changed the inventory quantities. A Shopify global ID isn't an accepted
+   * value (e.g./ specifying "gid://shopify/Order/123" would return an error). This field is required for all
+   * quantity names except `available`. The field `ledgerDocumentUri` isn't supported for use with an `available`
+   * quantity name.
+   *
+   */
   ledgerDocumentUri?: InputMaybe<Scalars['String']['input']>;
   /** Specifies the location at which the change will be applied. */
   locationId: Scalars['ID']['input'];
@@ -20101,7 +20119,13 @@ export type InventoryMoveQuantitiesInput = {
    *
    */
   reason: Scalars['String']['input'];
-  /** The reference document URI for the changes. Used to denote what's causing the change. */
+  /**
+   * A freeform URI that represents why the inventory change happened. This can be the entity adjusting inventory
+   * quantities or the Shopify resource that's associated with the inventory adjustment. For example, a unit in a
+   * draft order might have been previously reserved, and a merchant later creates an order from the draft order.
+   * In this case, the referenceDocumentUri for the inventory adjustment is a URI referencing the order ID.
+   *
+   */
   referenceDocumentUri: Scalars['String']['input'];
 };
 
@@ -20185,7 +20209,13 @@ export type InventoryMoveQuantityChange = {
  *
  */
 export type InventoryMoveQuantityTerminalInput = {
-  /** The ledger document URI for the quantity move. Not allowed for 'available' and required for other quantity names. */
+  /**
+   * A freeform URI that represents what changed the inventory quantities. A Shopify global ID isn't an accepted
+   * value (e.g./ specifying "gid://shopify/Order/123" would return an error). This field is required for a move of
+   * all quantity names except `available`. The field `ledgerDocumentUri` isn't supported for use with an
+   * `available` quantity name.
+   *
+   */
   ledgerDocumentUri?: InputMaybe<Scalars['String']['input']>;
   /** Specifies the location at which the change will be applied. */
   locationId: Scalars['ID']['input'];
@@ -20262,9 +20292,9 @@ export type InventoryScheduledChange = {
   fromName: Scalars['String']['output'];
   /** The quantities of an inventory item that are related to a specific location. */
   inventoryLevel: InventoryLevel;
-  /** An active reference document associated with the inventory quantity. Must be a valid URI. */
+  /** A freeform URI that represents what changed the inventory quantities. */
   ledgerDocumentUri: Scalars['URL']['output'];
-  /** The quantity of the scheduled change associated with the ledger document in the `from_name` state. */
+  /** The quantity of the scheduled change associated with the ledger document in the `fromName` state. */
   quantity: Scalars['Int']['output'];
   /**
    * The quantity
@@ -20325,7 +20355,7 @@ export type InventoryScheduledChangeInput = {
 export type InventoryScheduledChangeItemInput = {
   /** The ID of the inventory item. */
   inventoryItemId: Scalars['ID']['input'];
-  /** The ledger document URI which will be used to calculate the quantity transfered. */
+  /** A freeform URI that represents what changed the inventory quantities. */
   ledgerDocumentUri: Scalars['URL']['input'];
   /** The ID of the location. */
   locationId: Scalars['ID']['input'];
@@ -20341,7 +20371,13 @@ export type InventorySetOnHandQuantitiesInput = {
    *
    */
   reason: Scalars['String']['input'];
-  /** The reference document URI for the changes. Used to denote what's causing the change. */
+  /**
+   * A freeform URI that represents why the inventory change happened. This can be the entity adjusting inventory
+   * quantities or the Shopify resource that's associated with the inventory adjustment. For example, a unit in a
+   * draft order might have been previously reserved, and a merchant later creates an order from the draft order.
+   * In this case, the referenceDocumentUri for the inventory adjustment is a URI referencing the order ID.
+   *
+   */
   referenceDocumentUri?: InputMaybe<Scalars['String']['input']>;
   /** The value to which the on hand quantity will be set. */
   setQuantities: Array<InventorySetQuantityInput>;
@@ -20408,7 +20444,13 @@ export type InventorySetScheduledChangesInput = {
   items: Array<InventoryScheduledChangeItemInput>;
   /** The reason for setting up the scheduled changes. */
   reason: Scalars['String']['input'];
-  /** The reference document URI to indicate how the scheduled changes are related for auditing purposes. */
+  /**
+   * A freeform URI that represents why the inventory change happened. This can be the entity adjusting inventory
+   * quantities or the Shopify resource that's associated with the inventory adjustment. For example, a unit in a
+   * draft order might have been previously reserved, and a merchant later creates an order from the draft order.
+   * In this case, the referenceDocumentUri for the inventory adjustment is a URI referencing the order ID.
+   *
+   */
   referenceDocumentUri: Scalars['URL']['input'];
 };
 

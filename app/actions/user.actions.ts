@@ -6,8 +6,23 @@ import { storefrontClient } from '@/clients/storeFrontClient'
 import { PlatformUserCreateInput } from '@/packages/core/platform/types'
 import { COOKIE_ACCESS_TOKEN } from '@/constants'
 
-export async function signupUser({ email, password, lastName }: { email: string; password: string; lastName: string }) {
-  const user = await storefrontClient.createUser({ email, password, lastName })
+export async function signupUser({
+  email,
+  password,
+  firstName,
+  lastName,
+  phone,
+  // acceptsMarketing,
+}: {
+  email: string
+  password: string
+  firstName: string
+  lastName: string
+  phone: string
+  // acceptsMarketing: boolean
+}) {
+  const user = await storefrontClient.createUser({ email, password, firstName, lastName })
+  // console.log('user from signupUser:', user)
   return user
 }
 

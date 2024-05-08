@@ -214,19 +214,11 @@ async function getCollection(client: StorefrontApiClient, handle: string): Promi
 
 async function createUser(client: StorefrontApiClient, input: PlatformUserCreateInput): Promise<Pick<PlatformUser, 'id'> | undefined | null> {
   console.log('Input:', input)
-  try {
-    const user = await client.request<CreateCustomerMutation>(createCustomerMutation, { variables: { input } })
+  const user = await client.request<CreateCustomerMutation>(createCustomerMutation, { variables: { input } })
 
-    if (!user.data?.customerCreate?.customer) {
-      console.error('No user returned from mutation', 'User:', user)
-      return null
-    }
+  console.error('No user returned from mutation', 'graphQLErrors', user.errors?.graphQLErrors)
 
-    return user.data.customerCreate?.customer
-  } catch (error) {
-    console.error('Error executing mutation', error)
-    return null
-  }
+  return user.data?.customerCreate?.customer
 }
 
 async function createUserAccessToken(client: StorefrontApiClient, input: Pick<PlatformUserCreateInput, 'password' | 'email'>): Promise<PlatformAccessToken | undefined | null> {

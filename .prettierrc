@@ -2,7 +2,7 @@
   "plugins": ["prettier-plugin-tailwindcss"],
   "trailingComma": "es5",
   "tabWidth": 2,
-  "printWidth": 180,
+  "printWidth": 100,
   "semi": false,
   "singleQuote": true,
   "jsxSingleQuote": true
