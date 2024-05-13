@@ -7,7 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "codegen": "graphql-codegen && graphql-codegen -p admin"
+    "codegen": "graphql-codegen && graphql-codegen -p admin",
+    "sync": "node -r esbuild-register scripts/sync.ts"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.3.4",
@@ -46,6 +47,7 @@
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
+    "esbuild-register": "^3.5.0",
     "eslint": "^8",
     "eslint-config-next": "14.2.3",
     "postcss": "^8",

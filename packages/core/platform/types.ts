@@ -11,7 +11,7 @@ export interface PlatformProduct {
   options: PlatformProductOptions[]
   priceRange: PlatformPriceRange
   variants: PlatformVariant[]
-  featuredImage: PlatformImage | undefined | null
+  featuredImage: PlatformImage
   images: PlatformImage[]
   tags: string[]
   vendor: string
@@ -141,7 +141,8 @@ export interface PlatformUser {
   tags: string[]
 }
 
-export interface PlatformUserCreateInput extends Pick<PlatformUser, 'email' | 'firstName' | 'lastName' | 'phone'> {
+export interface PlatformUserCreateInput
+  extends Pick<PlatformUser, 'email' | 'firstName' | 'lastName' | 'phone'> {
   password: string
 }
 

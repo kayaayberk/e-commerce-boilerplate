@@ -1,60 +1,68 @@
-import { AdminApiClient, createAdminApiClient } from '@shopify/admin-api-client'
-import { createStorefrontApiClient, StorefrontApiClient } from '@shopify/storefront-api-client'
+// TYPES
+import type { WebhookSubscriptionTopic } from './types/admin/admin.types'
+import type {
+  WebhookSubscriptionCreateMutation,
+  ProductFeedCreateMutation,
+  LatestProductFeedsQuery,
+  ProductFullSyncMutation,
+  SingleAdminProductQuery,
+  ProductStatusQuery,
+} from './types/admin/admin.generated'
+import type {
+  CreateAccessTokenMutation,
+  DeleteCartItemsMutation,
+  UpdateCartItemsMutation,
+  CreateCustomerMutation,
+  CreateCartItemMutation,
+  UpdateCustomerMutation,
+  ProductsByHandleQuery,
+  SingleCollectionQuery,
+  SingleCustomerQuery,
+  CreateCartMutation,
+  SingleProductQuery,
+  CollectionsQuery,
+  SingleCartQuery,
+  SinglePageQuery,
+  PagesQuery,
+  MenuQuery,
+} from './types/storefront.generated'
+import {
+  PlatformUserCreateInput,
+  PlatformProductStatus,
+  PlatformAccessToken,
+  PlatformCollection,
+  PlatformItemInput,
+  PlatformProduct,
+  PlatformMenu,
+  PlatformPage,
+  PlatformCart,
+  PlatformUser,
+} from '../types'
+import { CurrencyCode } from './types/storefront.types'
 
+// MUTATIONS
 import { createCartItemMutation, createCartMutation, deleteCartItemsMutation, updateCartItemsMutation } from './mutations/cart.storefront'
 import { createAccessTokenMutation, createCustomerMutation, updateCustomerMutation } from './mutations/customer.storefront'
 import { createProductFeedMutation, fullSyncProductFeedMutation } from './mutations/product-feed.admin'
 import { subscribeWebhookMutation } from './mutations/webhook.admin'
-import { normalizeCart, normalizeCollection, normalizeProduct } from './normalize'
-import { getCartQuery } from './queries/cart.storefront'
-import { getCollectionQuery, getCollectionsQuery } from './queries/collection.storefront'
-import { getCustomerQuery } from './queries/customer.storefront'
-import { getMenuQuery } from './queries/menu.storefront'
-import { getPageQuery, getPagesQuery } from './queries/page.storefront'
-import { getLatestProductFeedQuery } from './queries/product-feed.admin'
-import { getAdminProductQuery, getProductStatusQuery } from './queries/product.admin'
-import { getProductQuery, getProductsByHandleQuery } from './queries/product.storefront'
 
-import type {
-  LatestProductFeedsQuery,
-  ProductFeedCreateMutation,
-  ProductFullSyncMutation,
-  ProductStatusQuery,
-  SingleAdminProductQuery,
-  WebhookSubscriptionCreateMutation,
-} from './types/admin/admin.generated'
-import type { WebhookSubscriptionTopic } from './types/admin/admin.types'
-import type {
-  CollectionsQuery,
-  CreateAccessTokenMutation,
-  CreateCartItemMutation,
-  CreateCartMutation,
-  CreateCustomerMutation,
-  DeleteCartItemsMutation,
-  MenuQuery,
-  PagesQuery,
-  ProductsByHandleQuery,
-  SingleCartQuery,
-  SingleCollectionQuery,
-  SingleCustomerQuery,
-  SinglePageQuery,
-  SingleProductQuery,
-  UpdateCartItemsMutation,
-  UpdateCustomerMutation,
-} from './types/storefront.generated'
-import { CurrencyCode } from './types/storefront.types'
-import {
-  PlatformAccessToken,
-  PlatformCart,
-  PlatformCollection,
-  PlatformItemInput,
-  PlatformMenu,
-  PlatformPage,
-  PlatformProduct,
-  PlatformProductStatus,
-  PlatformUser,
-  PlatformUserCreateInput,
-} from '../types'
+// QUERIES
+import { getCollectionQuery, getCollectionsQuery } from './queries/collection.storefront'
+import { getProductQuery, getProductsByHandleQuery } from './queries/product.storefront'
+import { getAdminProductQuery, getProductStatusQuery } from './queries/product.admin'
+import { getLatestProductFeedQuery } from './queries/product-feed.admin'
+import { getPageQuery, getPagesQuery } from './queries/page.storefront'
+import { getCustomerQuery } from './queries/customer.storefront'
+import { getCartQuery } from './queries/cart.storefront'
+import { getMenuQuery } from './queries/menu.storefront'
+
+// CLIENTS
+import { createStorefrontApiClient, StorefrontApiClient } from '@shopify/storefront-api-client'
+import { AdminApiClient, createAdminApiClient } from '@shopify/admin-api-client'
+
+// NORMALIZERS
+import { normalizeCart, normalizeCollection, normalizeProduct } from './normalize'
+
 
 interface CreateShopifyClientProps {
   storeDomain: string
@@ -78,28 +86,28 @@ export function createShopifyClient({ storefrontAccessToken, adminAccessToken, s
   // To prevent prettier from wrapping pretty one liners and making them unreadable
   // prettier-ignore
   return {
-    getMenu: async (handle?: string) => getMenu(client!, handle),
-    getProduct: async (id: string) => getProduct(client!, id),
-    getProductByHandle: async (handle: string) => getProductByHandle(client!, handle),
     subscribeWebhook: async (topic: `${WebhookSubscriptionTopic}`, callbackUrl: string) => subscribeWebhook(adminClient, topic, callbackUrl),
-    createProductFeed: async () => createProductFeed(adminClient),
-    fullSyncProductFeed: async (id: string) => fullSyncProductFeed(adminClient, id),
-    getLatestProductFeed: async () => getLatestProductFeed(adminClient),
-    getPage: async (handle: string) => getPage(client!, handle),
-    getAllPages: async () => getAllPages(client!),
-    getProductStatus: async (id: string) => getProductStatus(adminClient!, id),
-    getAdminProduct: async (id: string) => getAdminProduct(adminClient, id),
-    createCart: async (items: PlatformItemInput[]) => createCart(client!, items),
+    updateUser: async (accessToken: string, input: Omit<PlatformUserCreateInput, "password">) => updateUser(client!, accessToken, input),
+    createUserAccessToken: async (input: Pick<PlatformUserCreateInput, "password" | "email">) => createUserAccessToken(client!, input),
     createCartItem: async (cartId: string, items: PlatformItemInput[]) => createCartItem(client!,cartId, items),
     updateCartItem: async (cartId: string, items: PlatformItemInput[]) => updateCartItem(client!,cartId, items),
     deleteCartItem: async (cartId: string, itemIds: string[]) => deleteCartItem(client!, cartId, itemIds),
-    getCart: async (cartId: string) => getCart(client!, cartId),
-    getCollections: async (limit?: number) => getCollections(client!, limit),
-    getCollection: async (handle: string) => getCollection(client!, handle),
+    getProductByHandle: async (handle: string) => getProductByHandle(client!, handle),
     createUser: async (input: PlatformUserCreateInput) => createUser(client!, input),
+    fullSyncProductFeed: async (id: string) => fullSyncProductFeed(adminClient, id),
+    createCart: async (items: PlatformItemInput[]) => createCart(client!, items),
+    getProductStatus: async (id: string) => getProductStatus(adminClient!, id),
+    getCollections: async (limit?: number) => getCollections(client!, limit),
+    getAdminProduct: async (id: string) => getAdminProduct(adminClient, id),
+    getCollection: async (handle: string) => getCollection(client!, handle),
     getUser: async (accessToken: string) => getUser(client!, accessToken),
-    updateUser: async (accessToken: string, input: Omit<PlatformUserCreateInput, "password">) => updateUser(client!, accessToken, input),
-    createUserAccessToken: async (input: Pick<PlatformUserCreateInput, "password" | "email">) => createUserAccessToken(client!, input)
+    getLatestProductFeed: async () => getLatestProductFeed(adminClient),
+    createProductFeed: async () => createProductFeed(adminClient),
+    getMenu: async (handle?: string) => getMenu(client!, handle),
+    getPage: async (handle: string) => getPage(client!, handle),
+    getCart: async (cartId: string) => getCart(client!, cartId),
+    getProduct: async (id: string) => getProduct(client!, id),
+    getAllPages: async () => getAllPages(client!),
   }
 }
 
@@ -213,10 +221,7 @@ async function getCollection(client: StorefrontApiClient, handle: string): Promi
 }
 
 async function createUser(client: StorefrontApiClient, input: PlatformUserCreateInput): Promise<Pick<PlatformUser, 'id'> | undefined | null> {
-  console.log('Input:', input)
   const user = await client.request<CreateCustomerMutation>(createCustomerMutation, { variables: { input } })
-
-  console.error('No user returned from mutation', 'graphQLErrors', user.errors?.graphQLErrors)
 
   return user.data?.customerCreate?.customer
 }
