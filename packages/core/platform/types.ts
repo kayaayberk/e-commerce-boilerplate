@@ -1,3 +1,12 @@
+export interface PlatformPredictiveSearch {
+  hits: PlatformProduct[]
+  hasMore: boolean
+  collections: PlatformCollection[]
+  querySuggestion: string[]
+  pages: PlatformPage[]
+
+}
+
 export interface PlatformMenu {
   items: { title: string; url: string }[]
 }

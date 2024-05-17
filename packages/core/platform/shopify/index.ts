@@ -25,6 +25,8 @@ import type {
   SinglePageQuery,
   PagesQuery,
   MenuQuery,
+  SearchProductsQuery,
+  PredictiveSearchQuery,
 } from './types/storefront.generated'
 import {
   PlatformUserCreateInput,
@@ -38,7 +40,7 @@ import {
   PlatformCart,
   PlatformUser,
 } from '../types'
-import { CurrencyCode } from './types/storefront.types'
+import { CurrencyCode, SearchQuerySuggestion } from './types/storefront.types'
 
 // MUTATIONS
 import { createCartItemMutation, createCartMutation, deleteCartItemsMutation, updateCartItemsMutation } from './mutations/cart.storefront'
@@ -48,7 +50,7 @@ import { subscribeWebhookMutation } from './mutations/webhook.admin'
 
 // QUERIES
 import { getCollectionQuery, getCollectionsQuery } from './queries/collection.storefront'
-import { getProductQuery, getProductsByHandleQuery } from './queries/product.storefront'
+import { getProductQuery, getProductsByHandleQuery, predictiveSearchQuery, searchProductsQuery } from './queries/product.storefront'
 import { getAdminProductQuery, getProductStatusQuery } from './queries/product.admin'
 import { getLatestProductFeedQuery } from './queries/product-feed.admin'
 import { getPageQuery, getPagesQuery } from './queries/page.storefront'
@@ -83,30 +85,36 @@ export function createShopifyClient({ storefrontAccessToken, adminAccessToken, s
     apiVersion: '2024-04',
   })
 
-  // To prevent prettier from wrapping pretty one liners and making them unreadable
-  // prettier-ignore
   return {
     subscribeWebhook: async (topic: `${WebhookSubscriptionTopic}`, callbackUrl: string) => subscribeWebhook(adminClient, topic, callbackUrl),
+    fullSyncProductFeed: async (id: string) => fullSyncProductFeed(adminClient, id),
+
     updateUser: async (accessToken: string, input: Omit<PlatformUserCreateInput, "password">) => updateUser(client!, accessToken, input),
     createUserAccessToken: async (input: Pick<PlatformUserCreateInput, "password" | "email">) => createUserAccessToken(client!, input),
+    createUser: async (input: PlatformUserCreateInput) => createUser(client!, input),
+    getUser: async (accessToken: string) => getUser(client!, accessToken),
+
     createCartItem: async (cartId: string, items: PlatformItemInput[]) => createCartItem(client!,cartId, items),
     updateCartItem: async (cartId: string, items: PlatformItemInput[]) => updateCartItem(client!,cartId, items),
     deleteCartItem: async (cartId: string, itemIds: string[]) => deleteCartItem(client!, cartId, itemIds),
-    getProductByHandle: async (handle: string) => getProductByHandle(client!, handle),
-    createUser: async (input: PlatformUserCreateInput) => createUser(client!, input),
-    fullSyncProductFeed: async (id: string) => fullSyncProductFeed(adminClient, id),
     createCart: async (items: PlatformItemInput[]) => createCart(client!, items),
+    getCart: async (cartId: string) => getCart(client!, cartId),
+    
+    getPredictiveSearchResults: async (query: string, limit: number, limitScope: 'ALL' | 'EACH') => getPredictiveSearchResults(client!, query, limit, limitScope),
+    searchProducts: async (query: string, first: number) => searchProducts(client!, query, first),
+    getProductByHandle: async (handle: string) => getProductByHandle(client!, handle),
     getProductStatus: async (id: string) => getProductStatus(adminClient!, id),
-    getCollections: async (limit?: number) => getCollections(client!, limit),
     getAdminProduct: async (id: string) => getAdminProduct(adminClient, id),
-    getCollection: async (handle: string) => getCollection(client!, handle),
-    getUser: async (accessToken: string) => getUser(client!, accessToken),
+    getProduct: async (id: string) => getProduct(client!, id),
+
     getLatestProductFeed: async () => getLatestProductFeed(adminClient),
     createProductFeed: async () => createProductFeed(adminClient),
+
+    getCollections: async (limit?: number) => getCollections(client!, limit),
+    getCollection: async (handle: string) => getCollection(client!, handle),
+
     getMenu: async (handle?: string) => getMenu(client!, handle),
     getPage: async (handle: string) => getPage(client!, handle),
-    getCart: async (cartId: string) => getCart(client!, cartId),
-    getProduct: async (id: string) => getProduct(client!, id),
     getAllPages: async () => getAllPages(client!),
   }
 }
@@ -135,6 +143,26 @@ async function getProductByHandle(client: StorefrontApiClient, handle: string) {
   const product = response.data?.products?.edges?.find(Boolean)?.node
 
   return normalizeProduct(product)
+}
+
+async function searchProducts(client: StorefrontApiClient, query: string, first: number) {
+  const response = await client.request<SearchProductsQuery>(searchProductsQuery, { variables: { query, first } })
+
+  const products = response.data?.search.edges.map((edge) => normalizeProduct(edge.node)).filter(Boolean) as PlatformProduct[]
+
+  return products
+}
+
+async function getPredictiveSearchResults(client: StorefrontApiClient, query: string, limit: number, limitScope: 'EACH' | 'ALL') {
+  const response = await client.request<PredictiveSearchQuery>(predictiveSearchQuery, { variables: { query, limit, limitScope } })
+
+  const querySuggestion = response.data?.predictiveSearch?.queries as SearchQuerySuggestion[]
+  const collections = response.data?.predictiveSearch?.collections as PlatformCollection[]
+  const products = response.data?.predictiveSearch?.products?.map((product) => normalizeProduct(product)).filter(Boolean) as PlatformProduct[]
+  const pages = response.data?.predictiveSearch?.pages as PlatformPage[]
+
+  return { querySuggestion, collections, products, pages }
+  
 }
 
 async function subscribeWebhook(client: AdminApiClient, topic: `${WebhookSubscriptionTopic}`, callbackUrl: string) {

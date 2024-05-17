@@ -1,0 +1,21 @@
+CREATE TABLE IF NOT EXISTS "platformProduct" (
+	"id" text PRIMARY KEY NOT NULL,
+	"handle" text NOT NULL,
+	"title" text NOT NULL,
+	"description" text NOT NULL,
+	"descriptionHtml" text NOT NULL,
+	"options" json NOT NULL,
+	"priceRange" json NOT NULL,
+	"featuredImage" json NOT NULL,
+	"images" json NOT NULL,
+	"tags" json NOT NULL,
+	"vendor" text NOT NULL,
+	"minPrice" numeric NOT NULL,
+	"updatedAt" text NOT NULL,
+	"createdAt" text NOT NULL,
+	"updatedAtTimestamp" numeric NOT NULL,
+	"createdAtTimestamp" numeric NOT NULL,
+	"flatOptions" json NOT NULL,
+	"collections" json NOT NULL,
+	"seo" json NOT NULL
+);

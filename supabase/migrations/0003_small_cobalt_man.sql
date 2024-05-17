@@ -1,0 +1,1 @@
+ALTER TABLE "platformProduct" ADD COLUMN "variants" json NOT NULL;

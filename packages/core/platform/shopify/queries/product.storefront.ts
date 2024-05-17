@@ -1,3 +1,4 @@
+import { collectionFragment } from '../fragments/collection'
 import { productFragment } from '../fragments/product'
 
 export const getProductQuery = `#graphql
@@ -46,4 +47,49 @@ export const getProductRecommendationsQuery = `#graphql
     }
   }
   ${productFragment}
+`
+
+export const searchProductsQuery = `#graphql
+  query SearchProducts($query: String!, $first: Int) {
+    search(query: $query, first: $first) {
+      edges {
+        node {
+          ...singleProduct
+        }
+      }
+    }
+  }
+  ${productFragment}
+`
+
+export const predictiveSearchQuery = `#graphql
+  query PredictiveSearch($query: String!, $limit: Int, $limitScope: PredictiveSearchLimitScope) {
+    predictiveSearch(query: $query, limit: $limit, limitScope: $limitScope) {
+      queries {
+        text
+        styledText
+        trackingParameters
+      }
+      collections {
+        id
+      }
+      products {
+        ...singleProduct
+      }
+      pages {
+        id
+        title
+        handle
+        body
+        bodySummary
+        seo {
+          ...seo
+        }
+        createdAt
+        updatedAt
+      }
+    }
+  }
+  ${productFragment}
+
 `

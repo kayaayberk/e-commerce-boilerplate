@@ -16344,7 +16344,7 @@ export type FulfillmentLineItemEdge = {
  * ### Fulfillment orders assigned to the app for fulfillment
  *
  * Fulfillment service apps can retrieve the fulfillment orders which have been assigned to their locations with the
- * [Shop.assignedFulfillmentOrders](https://shopify.dev/api/admin-graphql/latest/objects/Shop#connection-shop-assignedfulfillmentorders)
+ * [assignedFulfillmentOrders](https://shopify.dev/api/admin-graphql/2024-07/objects/queryroot#connection-assignedfulfillmentorders)
  * connection.
  * Use the `assignmentStatus` argument to control whether all assigned fulfillment orders
  * should be returned or only those where a merchant has sent a
@@ -16584,7 +16584,7 @@ export type FulfillmentOrder = Node & {
  * ### Fulfillment orders assigned to the app for fulfillment
  *
  * Fulfillment service apps can retrieve the fulfillment orders which have been assigned to their locations with the
- * [Shop.assignedFulfillmentOrders](https://shopify.dev/api/admin-graphql/latest/objects/Shop#connection-shop-assignedfulfillmentorders)
+ * [assignedFulfillmentOrders](https://shopify.dev/api/admin-graphql/2024-07/objects/queryroot#connection-assignedfulfillmentorders)
  * connection.
  * Use the `assignmentStatus` argument to control whether all assigned fulfillment orders
  * should be returned or only those where a merchant has sent a
@@ -16757,7 +16757,7 @@ export type FulfillmentOrderFulfillmentOrdersForMergeArgs = {
  * ### Fulfillment orders assigned to the app for fulfillment
  *
  * Fulfillment service apps can retrieve the fulfillment orders which have been assigned to their locations with the
- * [Shop.assignedFulfillmentOrders](https://shopify.dev/api/admin-graphql/latest/objects/Shop#connection-shop-assignedfulfillmentorders)
+ * [assignedFulfillmentOrders](https://shopify.dev/api/admin-graphql/2024-07/objects/queryroot#connection-assignedfulfillmentorders)
  * connection.
  * Use the `assignmentStatus` argument to control whether all assigned fulfillment orders
  * should be returned or only those where a merchant has sent a
@@ -16930,7 +16930,7 @@ export type FulfillmentOrderFulfillmentsArgs = {
  * ### Fulfillment orders assigned to the app for fulfillment
  *
  * Fulfillment service apps can retrieve the fulfillment orders which have been assigned to their locations with the
- * [Shop.assignedFulfillmentOrders](https://shopify.dev/api/admin-graphql/latest/objects/Shop#connection-shop-assignedfulfillmentorders)
+ * [assignedFulfillmentOrders](https://shopify.dev/api/admin-graphql/2024-07/objects/queryroot#connection-assignedfulfillmentorders)
  * connection.
  * Use the `assignmentStatus` argument to control whether all assigned fulfillment orders
  * should be returned or only those where a merchant has sent a
@@ -17103,7 +17103,7 @@ export type FulfillmentOrderLineItemsArgs = {
  * ### Fulfillment orders assigned to the app for fulfillment
  *
  * Fulfillment service apps can retrieve the fulfillment orders which have been assigned to their locations with the
- * [Shop.assignedFulfillmentOrders](https://shopify.dev/api/admin-graphql/latest/objects/Shop#connection-shop-assignedfulfillmentorders)
+ * [assignedFulfillmentOrders](https://shopify.dev/api/admin-graphql/2024-07/objects/queryroot#connection-assignedfulfillmentorders)
  * connection.
  * Use the `assignmentStatus` argument to control whether all assigned fulfillment orders
  * should be returned or only those where a merchant has sent a
@@ -17279,7 +17279,7 @@ export type FulfillmentOrderLocationsForMoveArgs = {
  * ### Fulfillment orders assigned to the app for fulfillment
  *
  * Fulfillment service apps can retrieve the fulfillment orders which have been assigned to their locations with the
- * [Shop.assignedFulfillmentOrders](https://shopify.dev/api/admin-graphql/latest/objects/Shop#connection-shop-assignedfulfillmentorders)
+ * [assignedFulfillmentOrders](https://shopify.dev/api/admin-graphql/2024-07/objects/queryroot#connection-assignedfulfillmentorders)
  * connection.
  * Use the `assignmentStatus` argument to control whether all assigned fulfillment orders
  * should be returned or only those where a merchant has sent a
@@ -39648,7 +39648,7 @@ export type QueryRoot = {
    * third-party fulfillment service locations, or all kinds of locations together.
    *
    * For fetching only the fulfillment orders assigned to the app's locations, use the
-   * [Shop.assignedFulfillmentOrders](https://shopify.dev/api/admin-graphql/latest/objects/Shop#connection-shop-assignedfulfillmentorders)
+   * [assignedFulfillmentOrders](https://shopify.dev/api/admin-graphql/2024-07/objects/queryroot#connection-assignedfulfillmentorders)
    * connection.
    *
    */
@@ -45448,6 +45448,7 @@ export type Shop = HasMetafields & HasPublishedTranslations & Node & {
    * Perform filtering with the `assignmentStatus` argument
    * to receive only fulfillment orders that have been requested to be fulfilled.
    *
+   * @deprecated Use `QueryRoot.assignedFulfillmentOrders` instead. Details: https://shopify.dev/changelog/moving-the-shop-assignedfulfillmentorders-connection-to-queryroot
    */
   assignedFulfillmentOrders: FulfillmentOrderConnection;
   /** The list of sales channels not currently installed on the shop. */
