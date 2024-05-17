@@ -1,0 +1,5 @@
+/packages/core/platform/shopify/index.ts
+/app/api/sync/route.ts
+/components/ui/*.tsx
+/components/ui/*.ts
+/scripts/sync.ts
