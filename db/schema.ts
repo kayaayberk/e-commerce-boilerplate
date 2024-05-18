@@ -1,11 +1,5 @@
 import { json, integer, pgTable, varchar } from 'drizzle-orm/pg-core'
-import {
-  PlatformProductOptions,
-  PlatformCollection,
-  PlatformPriceRange,
-  PlatformVariant,
-  PlatformImage,
-} from '@/packages/core/platform/types'
+import { PlatformProductOptions, PlatformCollection, PlatformPriceRange, PlatformVariant, PlatformImage } from '@/packages/core/platform/types'
 
 export const platformProduct = pgTable('platformProduct', {
   id: varchar('id').primaryKey(),
