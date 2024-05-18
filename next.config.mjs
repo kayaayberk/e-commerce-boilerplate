@@ -1,11 +1,9 @@
 import withVercelToolbar from '@vercel/toolbar/plugins/next'
 import withBundleAnalyzer from '@next/bundle-analyzer'
 import withPlugins from 'next-compose-plugins'
-import { hostname } from 'os'
 
 /** @type {import('next').NextConfig} */
-const nextConfig = withPlugins(
-  [[withVercelToolbar(), withBundleAnalyzer({ enabled: process.env.ANALYZE === 'true' })]],
+const nextConfig = withPlugins([[withVercelToolbar(), withBundleAnalyzer({ enabled: process.env.ANALYZE === 'true' })]],
   {
     reactStrictMode: true,
     logging: {
