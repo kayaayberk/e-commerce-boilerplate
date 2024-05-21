@@ -3,7 +3,8 @@ import withBundleAnalyzer from '@next/bundle-analyzer'
 import withPlugins from 'next-compose-plugins'
 
 /** @type {import('next').NextConfig} */
-const nextConfig = withPlugins([[withVercelToolbar(), withBundleAnalyzer({ enabled: process.env.ANALYZE === 'true' })]],
+const nextConfig = withPlugins(
+  [[withVercelToolbar(), withBundleAnalyzer({ enabled: process.env.ANALYZE === 'true' })]],
   {
     reactStrictMode: true,
     logging: {
@@ -23,6 +24,15 @@ const nextConfig = withPlugins([[withVercelToolbar(), withBundleAnalyzer({ enabl
           port: '',
         },
       ],
+    },
+    webpack: (config, { webpack }) => {
+      config.plugins.push(
+        new webpack.IgnorePlugin({
+          resourceRegExp: /^pg-native$|^cloudflare:sockets$|^node:stream$/,
+        })
+      )
+
+      return config
     },
   }
 )
