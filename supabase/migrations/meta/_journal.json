@@ -5,29 +5,8 @@
     {
       "idx": 0,
       "version": "6",
-      "when": 1715951997030,
-      "tag": "0000_material_bruce_banner",
-      "breakpoints": true
-    },
-    {
-      "idx": 1,
-      "version": "6",
-      "when": 1715961496471,
-      "tag": "0001_flimsy_white_tiger",
-      "breakpoints": true
-    },
-    {
-      "idx": 2,
-      "version": "6",
-      "when": 1715962539035,
-      "tag": "0002_wide_silver_surfer",
-      "breakpoints": true
-    },
-    {
-      "idx": 3,
-      "version": "6",
-      "when": 1715962761829,
-      "tag": "0003_small_cobalt_man",
+      "when": 1716213849499,
+      "tag": "0000_nebulous_richard_fisk",
       "breakpoints": true
     }
   ]

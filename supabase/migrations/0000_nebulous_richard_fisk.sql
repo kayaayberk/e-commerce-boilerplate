@@ -1,0 +1,22 @@
+CREATE TABLE IF NOT EXISTS "platformProduct" (
+	"id" varchar PRIMARY KEY NOT NULL,
+	"handle" varchar NOT NULL,
+	"title" varchar NOT NULL,
+	"description" varchar NOT NULL,
+	"descriptionHtml" varchar NOT NULL,
+	"options" jsonb NOT NULL,
+	"priceRange" jsonb NOT NULL,
+	"variants" jsonb NOT NULL,
+	"featuredImage" jsonb NOT NULL,
+	"images" jsonb,
+	"tags" jsonb NOT NULL,
+	"vendor" varchar NOT NULL,
+	"minPrice" integer NOT NULL,
+	"updatedAt" varchar NOT NULL,
+	"createdAt" varchar NOT NULL,
+	"updatedAtTimestamp" integer NOT NULL,
+	"createdAtTimestamp" integer NOT NULL,
+	"flatOptions" jsonb NOT NULL,
+	"collections" jsonb NOT NULL,
+	"seo" jsonb NOT NULL
+);
