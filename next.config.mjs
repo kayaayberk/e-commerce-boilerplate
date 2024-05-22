@@ -28,11 +28,21 @@ const nextConfig = withPlugins(
     webpack: (config, { webpack }) => {
       config.plugins.push(
         new webpack.IgnorePlugin({
-          resourceRegExp: /^pg-native$|^cloudflare:sockets$|^node:stream$/,
+          resourceRegExp: /^pg-native$|^cloudflare:sockets$/,
         })
       )
 
       return config
+    },
+    rewrites() {
+      return [
+        { source: "/", destination: "/home" },
+        { source: "/health", destination: "/api/health" },
+        {
+          source: "/search/:second",
+          destination: "/search?second=:second",
+        },
+      ]
     },
   }
 )
