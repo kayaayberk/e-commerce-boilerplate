@@ -1,10 +1,12 @@
-import type { Config } from 'tailwindcss'
+import defaultTheme from 'tailwindcss/defaultTheme'
 
-const config = {
+/** @type {import('tailwindcss').Config} */
+module.exports = {
   darkMode: ['class'],
   content: [
     './pages/**/*.{ts,tsx}',
     './components/**/*.{ts,tsx}',
+    './views/**/*.{ts,tsx}',
     './app/**/*.{ts,tsx}',
     './src/**/*.{ts,tsx}',
   ],
@@ -73,6 +75,7 @@ const config = {
         'accordion-up': 'accordion-up 0.2s ease-out',
       },
       maxWidth: {
+        ...defaultTheme.width,
         'container-lg': '1440px',
         'container-md': '1280px',
         'container-sm': '1024px',
@@ -80,6 +83,4 @@ const config = {
     },
   },
   plugins: [require('tailwindcss-animate')],
-} satisfies Config
-
-export default config
+}

@@ -8,14 +8,17 @@
     "start": "next start",
     "lint": "next lint",
     "codegen": "graphql-codegen && graphql-codegen -p admin",
-    "sync": "node -r esbuild-register scripts/sync.ts"
+    "sync": "tsx scripts/sync.ts"
   },
   "dependencies": {
+    "@babel/plugin-transform-class-properties": "^7.24.1",
+    "@babel/plugin-transform-object-rest-spread": "^7.24.5",
     "@hookform/resolvers": "^3.3.4",
     "@next/bundle-analyzer": "^14.2.3",
     "@radix-ui/react-accordion": "^1.1.2",
     "@radix-ui/react-checkbox": "^1.0.4",
     "@radix-ui/react-dialog": "^1.0.5",
+    "@radix-ui/react-dropdown-menu": "^2.0.6",
     "@radix-ui/react-label": "^2.0.2",
     "@radix-ui/react-toast": "^1.1.5",
     "@shopify/admin-api-client": "^0.2.9",
@@ -24,6 +27,7 @@
     "@t3-oss/env-nextjs": "^0.10.1",
     "@uidotdev/usehooks": "^2.4.1",
     "@vercel/toolbar": "^0.1.14",
+    "autoprefixer": "^10.4.19",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
     "cmdk": "^1.0.0",
@@ -35,13 +39,13 @@
     "next-compose-plugins": "^2.2.1",
     "nuqs": "^1.17.2",
     "p-retry": "^6.2.0",
+    "postcss": "^8.4.38",
     "postgres": "^3.4.4",
     "react": "^18.3.1",
     "react-dom": "^18",
     "react-hook-form": "^7.51.4",
     "react-phone-number-input": "^3.4.1",
-    "tailwind-merge": "^2.3.0",
-    "tailwindcss-animate": "^1.0.7",
+    "tsx": "^4.10.5",
     "zod": "^3.23.6",
     "zustand": "^4.5.2"
   },
@@ -53,9 +57,10 @@
     "drizzle-kit": "^0.21.2",
     "eslint": "^8",
     "eslint-config-next": "14.2.3",
-    "postcss": "^8",
     "prettier": "^3.2.5",
     "prettier-plugin-tailwindcss": "^0.5.14",
-    "tailwindcss": "^3.4.1"
+    "tailwind-merge": "^2.3.0",
+    "tailwindcss": "^3.4.3",
+    "tailwindcss-animate": "^1.0.7"
   }
 }
