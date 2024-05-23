@@ -39,17 +39,19 @@ export async function POST(req: Request) {
   if (metadata.action === 'DELETE') {
     // Shopify sends a DELETE webhook not only when a product is deleted, but also when a product is unpublished or product variant is deleted.
     // Because of this, we need to first check if the product is REALLY deleted.
+    // To be able to delete 'DRAFTED' products, you first need to make the status 'ACTIVE' on Shopify and then delete it
+    // otherwise the product will not be deleted from Supabase.
     const productStatus = await storefrontClient.getProductStatus(denormalizeId(product.id))
-    console.log('PRODUCT STATUS', productStatus)
 
     if (productStatus?.status === 'DRAFT') {
       return Response.json({ status: 'ok', message: 'Product Drafted' })
     }
 
     if (originalProduct?.id) {
-      await db.insert(platformProduct).values({...originalProduct, id: normalizeId(originalProduct.id) }).onConflictDoUpdate({
+      const {id, ...rest} = originalProduct
+      await db.insert(platformProduct).values({id: normalizeId(originalProduct.id), ...rest }).onConflictDoUpdate({
         target: platformProduct.id,
-        set: {...originalProduct, id: normalizeId(originalProduct.id)},
+        set: {id: normalizeId(originalProduct.id), ...rest  },
       })
       return Response.json({ status: 'ok' })
     }
@@ -59,14 +61,14 @@ export async function POST(req: Request) {
 
   if (metadata.action === 'UPDATE' || metadata.action === 'CREATE') {
     if (originalProduct) {
-      await db.insert(platformProduct).values({...originalProduct, id: normalizeId(originalProduct.id) }).onConflictDoUpdate({
+      const {id, ...rest} = originalProduct
+      await db.insert(platformProduct).values({id: normalizeId(originalProduct.id), ...rest }).onConflictDoUpdate({
         target: platformProduct.id,
-        set: {...originalProduct, id: normalizeId(originalProduct.id)},
+        set: {id: normalizeId(originalProduct.id), ...rest },
       })
     }
   }
 
-  console.log(Response.json({ status: 'ok' }))
   return Response.json({ status: 'ok' })
 }
 
