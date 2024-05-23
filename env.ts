@@ -9,7 +9,7 @@ export const env = createEnv({
     SHOPIFY_ADMIN_ACCESS_TOKEN: z.string().optional(),
     SHOPIFY_APP_API_SECRET_KEY: z.string().optional(),
     SHOPIFY_STORE_DOMAIN: z.string(),
-    DATABASE_URL: z.string(),
+    POSTGRES_URL: z.string(),
     LIVE_HEADLESS_URL: z.string().optional(),
   },
   client: {},
@@ -18,7 +18,7 @@ export const env = createEnv({
     SHOPIFY_ADMIN_ACCESS_TOKEN: process.env.SHOPIFY_ADMIN_ACCESS_TOKEN,
     SHOPIFY_APP_API_SECRET_KEY: process.env.SHOPIFY_APP_API_SECRET_KEY,
     SHOPIFY_STORE_DOMAIN: process.env.SHOPIFY_STORE_DOMAIN,
-    DATABASE_URL: process.env.DATABASE_URL,
+    POSTGRES_URL: process.env.POSTGRES_URL,
     LIVE_HEADLESS_URL: process.env.LIVE_HEADLESS_URL || '',
   },
 })
