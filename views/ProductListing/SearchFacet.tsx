@@ -2,11 +2,11 @@
 
 import { parseAsInteger, useQueryState } from 'nuqs'
 import { useDebounce } from '@uidotdev/usehooks'
-
-import { useEffect, useState } from 'react'
-import { Button } from '@/components/ui/button'
-import { cn } from '@/lib/utils'
 import { Icons } from '@/components/Icons/Icons'
+import { Button } from '@/components/ui/button'
+import { Input } from '@/components/ui/input'
+import { useEffect, useState } from 'react'
+import { cn } from '@/lib/utils'
 
 export function SearchFacet({ className }: { className?: string }) {
   const [query, setQuery] = useQueryState('q', { shallow: false })
@@ -30,8 +30,8 @@ export function SearchFacet({ className }: { className?: string }) {
 
   return (
     <div className={cn('relative flex w-full', className)}>
-      <input
-        className='relative w-full appearance-none rounded-md border border-neutral-300 bg-neutral-100 px-2.5 py-1.5 pl-4 text-black focus:border-blue-500 focus:ring-blue-500'
+      <Input
+        className='relative w-full appearance-none rounded-md border border-neutral-300 bg-neutral-100 pl-4 text-black focus:border-blue-500 focus:ring-blue-500'
         placeholder='Search...'
         type='text'
         value={localQuery || ''}

@@ -6,12 +6,15 @@ import { Icons } from "@/components/Icons/Icons"
 import dynamic from "next/dynamic"
 
 
-const FacetsContent = dynamic(() => import("@/views/ProductListing/FacetsContent").then((m) => m.FacetsContent))
 const GenericSheet = dynamic(() => import("@/components/GenericSheet/GenericSheet").then((m) => m.GenericSheet), { loading: Placeholder })
+const FacetsContent = dynamic(() => import("@/views/ProductListing/FacetsContent").then((m) => m.FacetsContent))
 
+export type CategoriesDistribution = {
+  [category: string]: number
+}
 interface FacetsMobileProps {
   className?: string
-  facetDistribution: string| undefined
+  facetDistribution: Record<string, CategoriesDistribution> | undefined
   disabledFacets?: string[]
 }
 
