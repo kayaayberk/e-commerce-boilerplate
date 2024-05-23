@@ -1,9 +1,8 @@
-import { SearchParamsType } from "@/types"
-import { CategoryView } from "@/views/Category/CategoryView"
-import type { Metadata } from "next"
+import { CategoryView } from '@/views/Category/CategoryView'
+import { SearchParamsType } from '@/types'
+import type { Metadata } from 'next'
 
-
-export const runtime = "edge"
+export const runtime = 'edge'
 
 export const revalidate = 3600
 
@@ -15,7 +14,7 @@ interface ProductListingPageProps {
 export async function generateMetadata({ params }: ProductListingPageProps): Promise<Metadata> {
   return {
     title: `${params.slug} | Enterprise Commerce`,
-    description: "In excepteur elit mollit in.",
+    description: 'In excepteur elit mollit in.',
   }
 }
 
