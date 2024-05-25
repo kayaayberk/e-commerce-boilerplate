@@ -3,7 +3,7 @@ import { type ChangeEvent, useEffect, useState, useTransition } from "react"
 import { useDebounce } from "@uidotdev/usehooks"
 
 
-import { searchProducts } from "@/app/actions/product.actions"
+import { searchProductsAuto } from "@/app/actions/product.actions"
 import { PlatformProduct } from "@/packages/core/platform/types"
 
 
@@ -31,7 +31,7 @@ export function useAutocomplete({ callback, debounce = 300, noOfResults = 4 }: A
       startTransition(async () => {
         try {
           setStatus("loading")
-          const { hits, hasMore } = await searchProducts(debouncedQuery, noOfResults)
+          const { hits, hasMore } = await searchProductsAuto(debouncedQuery, noOfResults)
           setResults(hits)
           setHasMore(hasMore)
           setStatus("done")

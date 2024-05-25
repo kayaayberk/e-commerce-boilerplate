@@ -90,7 +90,7 @@ export class FilterBuilder {
     const subBuilder = new FilterBuilder()
     fn(subBuilder)
     const subExpression = subBuilder.build()
-    this.expression.push(`(${subExpression})`)
+    this.expression.push(`${subExpression}`)
     return this
   }
 
