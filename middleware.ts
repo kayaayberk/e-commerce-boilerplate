@@ -124,7 +124,7 @@ function handlePLPMiddleware(request: NextRequest) {
 export const config = {
   // https://nextjs.org/docs/messages/edge-dynamic-code-evaluation
   unstable_allowDynamic: [
-    '**/node_modules/bloom-filters', // Has issues with /dist/api.js -- not allowing it correctly on build.
+    '**/node_modules/.pnpm/**/node_modules/**',
     '**/node_modules/lodash/lodash.js',
     '**/node_modules/reflect-metadata/Reflect.js',
   ],
