@@ -1,4 +1,4 @@
-import { jsonb, integer, pgTable, varchar } from 'drizzle-orm/pg-core'
+import { jsonb, integer, pgTable, varchar, real } from 'drizzle-orm/pg-core'
 import { PlatformProductOptions, PlatformCollection, PlatformPriceRange, PlatformVariant, PlatformImage, PlatformPrice } from '@/packages/core/platform/types'
 
 export const platformProduct = pgTable('platformProduct', {
@@ -14,7 +14,7 @@ export const platformProduct = pgTable('platformProduct', {
   images: jsonb('images').$type<PlatformImage[]>().notNull(),
   tags: jsonb('tags').$type<string[]>().notNull(),
   vendor: varchar('vendor').notNull(),
-  minPrice: integer('minPrice').$type<number>().notNull(),
+  minPrice: real('minPrice').$type<number>().notNull(),
   updatedAt: varchar('updatedAt').notNull(),
   createdAt: varchar('createdAt').notNull(),
   updatedAtTimestamp: integer('updatedAtTimestamp').$type<number>().notNull(),
