@@ -2,6 +2,7 @@
   "name": "commerce-boilerplate",
   "version": "0.1.0",
   "private": true,
+  "type": "module",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
@@ -12,7 +13,7 @@
     "generate-bloom-filter": "tsx redirects/generate-bloom-filter.ts",
     "push": "pnpm with-env drizzle-kit push",
     "studio": "pnpm with-env drizzle-kit studio",
-    "with-env": "dotenv -e ./.env.local --"
+    "with-env": "dotenv -e .env.local --"
   },
   "dependencies": {
     "@babel/plugin-transform-class-properties": "^7.24.1",
@@ -38,7 +39,9 @@
     "clsx": "^2.1.1",
     "cmdk": "^1.0.0",
     "date-fns": "^3.6.0",
+    "dotenv": "^16.4.5",
     "drizzle-orm": "^0.30.10",
+    "embla-carousel-react": "^8.1.3",
     "graphql": "^16.8.1",
     "lucide-react": "^0.378.0",
     "next": "14.2.3",
@@ -50,6 +53,7 @@
     "react-dom": "^18",
     "react-hook-form": "^7.51.4",
     "react-phone-number-input": "^3.4.1",
+    "schema-dts": "^1.1.2",
     "tsx": "^4.10.5",
     "utf-8-validate": "5",
     "zod": "^3.23.6",
