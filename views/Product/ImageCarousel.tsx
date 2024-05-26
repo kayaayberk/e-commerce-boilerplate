@@ -47,11 +47,11 @@ function ImageCarousel({ className, images, children }: ImageCarouselnProps) {
 
   return (
     <div className={cn('relative flex max-w-full flex-col gap-10 md:max-w-[480px]', className)}>
-      <Carousel setApi={setApi} className='relative min-h-[600px] w-full '>
+      <Carousel setApi={setApi} className='relative min-h-[600px] flex items-center w-full '>
         <CarouselContent className='size-full'>
           {images.map((image, index) => (
             <CarouselItem
-              className='flex size-full h-[600px] flex-col items-center justify-center'
+              className='flex size-full h-[400px] flex-col items-center justify-center'
               key={image.url}
             >
               <Image
@@ -79,7 +79,7 @@ function ImageCarousel({ className, images, children }: ImageCarouselnProps) {
               key={'thumbnail_' + image.url}
               onClick={() => onThumbClick(index)}
               className={cn(
-                'flex size-24 shrink-0 items-center justify-center border border-white bg-neutral-100',
+                'flex size-24 shrink-0 items-center overflow-hidden  justify-center border border-white bg-neutral-100',
                 { 'border-black': index === current - 1 }
               )}
             >

@@ -1,20 +1,20 @@
-import {
-  getCombination,
-  getOptionsFromUrl,
-  hasValidOption,
-  removeOptionsFromUrl,
-} from '@/lib/productOptionsUtils'
+import {getCombination, getOptionsFromUrl, hasValidOption, removeOptionsFromUrl } from '@/lib/productOptionsUtils'
 import { SimilarProductsSectionSkeleton } from '@/views/ProductListing/Product/SimilarProductsSectionSkeleton'
+import { SimilarProductsSection } from '@/views/Product/SimilarProductsSection'
 import { PageSkeleton } from '@/views/ProductListing/Product/PageSkeleton'
-import { PlatformProduct } from '@/packages/core/platform/types'
+import { ProductInformation } from '@/views/Product/ProductInformation'
+import { Breadcrumbs } from '@/components/Breadcrumbs/Breadcrumbs'
+import { ProductVariants } from '@/views/Product/ProductVariants'
+import { getCollections } from '@/app/actions/collection.actions'
+import { ProductDetails } from '@/views/Product/ProductDetails'
+import { FavoriteMarker } from '@/views/Product/FavoriteMarker'
 import { getProduct } from '@/app/actions/product.actions'
+import ImageCarousel from '@/views/Product/ImageCarousel'
+import { GoBack } from '@/views/Product/GoBack'
+import { makeBreadcrumbs } from '@/lib/utils'
+import { generateJsonLd } from './metadata'
 import { notFound } from 'next/navigation'
 import { Suspense } from 'react'
-import { generateJsonLd } from './metadata'
-import { GoBack } from '@/views/Product/GoBack'
-import ImageCarousel from '@/views/Product/ImageCarousel'
-import { ProductInformation } from '@/views/Product/ProductInformation'
-import { ProductVariants } from '@/views/Product/ProductVariants'
 
 export const revalidate = 3600
 
@@ -35,8 +35,8 @@ export default async function Product({ params: { slug } }: ProductProps) {
 }
 
 async function ProductView({ slug }: { slug: string }) {
+  const collections = await getCollections()
   const product = await getProduct(removeOptionsFromUrl(slug))
-  console.log(slug)
 
   const { color, size } = getOptionsFromUrl(slug)
   const hasInvalidOptions =
@@ -48,7 +48,6 @@ async function ProductView({ slug }: { slug: string }) {
   }
 
   const combination = getCombination(product, color, size)
-  const lastCollection = product?.collections?.findLast(Boolean)
   const hasOnlyOneVariant = product.variants.length <= 1
 
   return (
@@ -61,34 +60,34 @@ async function ProductView({ slug }: { slug: string }) {
         <GoBack className='mb-8 hidden md:block' />
       </div>
       <main className='mx-auto max-w-container-sm'>
-        {/* <Breadcrumbs className="mb-8" items={makeBreadcrumbs(product)} /> */}
+        <Breadcrumbs className='mb-10' items={makeBreadcrumbs(product)} collections={collections} />
         <div className='grid grid-cols-1 justify-center gap-10 md:grid-cols-2 lg:gap-20'>
           <ImageCarousel images={product.images}>
-            {/* <FavoriteMarker handle={product.handle} /> */}
+            <FavoriteMarker handle={product.handle} />
           </ImageCarousel>
-          <div className='flex flex-col items-start pt-12'>
-            <ProductInformation className="pb-6" title={product.title} description={product.descriptionHtml} combination={combination} />
-            {hasOnlyOneVariant ? null : <ProductVariants combination={combination} handle={product.handle} className="pb-4" variants={product.variants} />}
+          <div className='flex flex-col items-start'>
+            <ProductInformation
+              className='pb-6'
+              title={product.title}
+              description={product.descriptionHtml}
+              combination={combination}
+            />
+            {hasOnlyOneVariant ? null : (
+              <ProductVariants
+                combination={combination}
+                handle={product.handle}
+                className='pb-4'
+                variants={product.variants}
+              />
+            )}
 
             <ProductDetails slug={slug} product={product} />
           </div>
         </div>
       </main>
       <Suspense fallback={<SimilarProductsSectionSkeleton />}>
-        {/* <SimilarProductsSection collection={lastCollection?.title} slug={slug} /> */}
+        <SimilarProductsSection id={product.id} />
       </Suspense>
     </div>
   )
-}
-
-function makeBreadcrumbs(product: PlatformProduct) {
-  const lastCollection = product.collections?.findLast(Boolean)
-
-  return {
-    Home: '/',
-    [lastCollection?.title || 'Products']: lastCollection?.handle
-      ? `/category/${lastCollection.handle}`
-      : '/search',
-    [product.title]: '',
-  }
 }

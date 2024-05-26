@@ -24,8 +24,8 @@ export function ProductCard(props: ProductCardProps) {
     props.images?.find((singleImage) => singleImage.url === props.featuredImage?.url)?.altText || ''
 
   return (
-    <div className={cn('group relative md:bg-transparent', props.className)}>
-      <div className='relative flex items-center justify-center'>
+    <div className={cn('group relative p-0 md:bg-transparent md:p-0', props.className)}>
+      <div className='relative flex size-full min-h-[100px] items-center justify-center'>
         <Link
           aria-label={linkAria}
           href={href}
