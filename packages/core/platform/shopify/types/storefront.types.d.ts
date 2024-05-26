@@ -677,6 +677,12 @@ export type CartBuyerIdentity = {
   email?: Maybe<Scalars['String']['output']>;
   /** The phone number of the buyer that's interacting with the cart. */
   phone?: Maybe<Scalars['String']['output']>;
+  /**
+   * A set of preferences tied to the buyer interacting with the cart. Preferences are used to prefill fields in at checkout to streamline information collection.
+   * Preferences are not synced back to the cart if they are overwritten.
+   *
+   */
+  preferences?: Maybe<CartPreferences>;
   /** The purchasing company associated with the cart. */
   purchasingCompany?: Maybe<PurchasingCompany>;
   /**
@@ -713,6 +719,12 @@ export type CartBuyerIdentityInput = {
   email?: InputMaybe<Scalars['String']['input']>;
   /** The phone number of the buyer that is interacting with the cart. */
   phone?: InputMaybe<Scalars['String']['input']>;
+  /**
+   * A set of preferences tied to the buyer interacting with the cart. Preferences are used to prefill fields in at checkout to streamline information collection.
+   * Preferences are not synced back to the cart if they are overwritten.
+   *
+   */
+  preferences?: InputMaybe<CartPreferencesInput>;
   /**
    * A set of wallet preferences tied to the buyer that is interacting with the cart.
    * Preferences can be used to populate relevant payment fields in the checkout flow.
@@ -846,6 +858,37 @@ export type CartCustomDiscountAllocation = CartDiscountAllocation & {
   title: Scalars['String']['output'];
 };
 
+/** Preferred location used to find the closest pick up point based on coordinates. */
+export type CartDeliveryCoordinatesPreference = {
+  __typename?: 'CartDeliveryCoordinatesPreference';
+  /**
+   * The two-letter code for the country of the preferred location.
+   *
+   * For example, US.
+   *
+   */
+  countryCode: CountryCode;
+  /** The geographic latitude for a given location. Coordinates are required in order to set pickUpHandle for pickup points. */
+  latitude: Scalars['Float']['output'];
+  /** The geographic longitude for a given location. Coordinates are required in order to set pickUpHandle for pickup points. */
+  longitude: Scalars['Float']['output'];
+};
+
+/** Preferred location used to find the closest pick up point based on coordinates. */
+export type CartDeliveryCoordinatesPreferenceInput = {
+  /**
+   * The two-letter code for the country of the preferred location.
+   *
+   * For example, US.
+   *
+   */
+  countryCode: CountryCode;
+  /** The geographic latitude for a given location. Coordinates are required in order to set pickUpHandle for pickup points. */
+  latitude: Scalars['Float']['input'];
+  /** The geographic longitude for a given location. Coordinates are required in order to set pickUpHandle for pickup points. */
+  longitude: Scalars['Float']['input'];
+};
+
 /** Information about the options available for one or more line items to be delivered to a specific address. */
 export type CartDeliveryGroup = {
   __typename?: 'CartDeliveryGroup';
@@ -929,6 +972,48 @@ export type CartDeliveryOption = {
   handle: Scalars['String']['output'];
   /** The title of the delivery option. */
   title?: Maybe<Scalars['String']['output']>;
+};
+
+/**
+ * A set of preferences tied to the buyer interacting with the cart. Preferences are used to prefill fields in at checkout to streamline information collection.
+ * Preferences are not synced back to the cart if they are overwritten.
+ *
+ */
+export type CartDeliveryPreference = {
+  __typename?: 'CartDeliveryPreference';
+  /** Preferred location used to find the closest pick up point based on coordinates. */
+  coordinates?: Maybe<CartDeliveryCoordinatesPreference>;
+  /** The preferred delivery methods such as shipping, local pickup or through pickup points. */
+  deliveryMethod: Array<PreferenceDeliveryMethodType>;
+  /**
+   * The pickup handle prefills checkout fields with the location for either local pickup or pickup points delivery methods.
+   * It accepts both location ID for local pickup and external IDs for pickup points.
+   *
+   */
+  pickupHandle: Array<Scalars['String']['output']>;
+};
+
+/** Delivery preferences can be used to prefill the delivery section at checkout. */
+export type CartDeliveryPreferenceInput = {
+  /**
+   * The coordinates of a delivery location in order of preference.
+   *
+   * The input must not contain more than `250` values.
+   */
+  coordinates?: InputMaybe<Array<CartDeliveryCoordinatesPreferenceInput>>;
+  /**
+   * The preferred delivery methods such as shipping, local pickup or through pickup points.
+   *
+   * The input must not contain more than `250` values.
+   */
+  deliveryMethod?: InputMaybe<Array<PreferenceDeliveryMethodType>>;
+  /**
+   * The pickup handle prefills checkout fields with the location for either local pickup or pickup points delivery methods.
+   * It accepts both location ID for local pickup and external IDs for pickup points.
+   *
+   * The input must not contain more than `250` values.
+   */
+  pickupHandle?: InputMaybe<Array<Scalars['String']['input']>>;
 };
 
 /**
@@ -1327,6 +1412,40 @@ export type CartPaymentUpdatePayload = {
   cart?: Maybe<Cart>;
   /** The list of errors that occurred from executing the mutation. */
   userErrors: Array<CartUserError>;
+};
+
+/**
+ * A set of preferences tied to the buyer interacting with the cart. Preferences are used to prefill fields in at checkout to streamline information collection.
+ * Preferences are not synced back to the cart if they are overwritten.
+ *
+ */
+export type CartPreferences = {
+  __typename?: 'CartPreferences';
+  /** Delivery preferences can be used to prefill the delivery section in at checkout. */
+  delivery?: Maybe<CartDeliveryPreference>;
+  /**
+   * Wallet preferences are used to populate relevant payment fields in the checkout flow.
+   * Accepted value: `["shop_pay"]`.
+   *
+   */
+  wallet?: Maybe<Array<Scalars['String']['output']>>;
+};
+
+/** The input fields represent preferences for the buyer that is interacting with the cart. */
+export type CartPreferencesInput = {
+  /**
+   * Delivery preferences can be used to prefill the delivery section in at checkout.
+   *
+   * The input must not contain more than `250` values.
+   */
+  delivery?: InputMaybe<Array<CartDeliveryPreferenceInput>>;
+  /**
+   * Wallet preferences are used to populate relevant payment fields in the checkout flow.
+   * Accepted value: `["shop_pay"]`.
+   *
+   * The input must not contain more than `250` values.
+   */
+  wallet?: InputMaybe<Array<Scalars['String']['input']>>;
 };
 
 /**
@@ -6394,6 +6513,16 @@ export enum PredictiveSearchType {
   Product = 'PRODUCT',
   /** Returns matching query strings. */
   Query = 'QUERY'
+}
+
+/** The preferred delivery methods such as shipping, local pickup or through pickup points. */
+export enum PreferenceDeliveryMethodType {
+  /** A delivery method used to let buyers collect purchases at designated locations like parcel lockers. */
+  PickupPoint = 'PICKUP_POINT',
+  /** A delivery method used to let buyers receive items directly from a specific location within an area. */
+  PickUp = 'PICK_UP',
+  /** A delivery method used to send items directly to a buyer’s specified address. */
+  Shipping = 'SHIPPING'
 }
 
 /**

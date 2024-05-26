@@ -27,6 +27,7 @@ import type {
   MenuQuery,
   SearchProductsQuery,
   PredictiveSearchQuery,
+  ProductRecommendationsQuery,
 } from './types/storefront.generated'
 import {
   PlatformUserCreateInput,
@@ -50,7 +51,7 @@ import { subscribeWebhookMutation } from './mutations/webhook.admin'
 
 // QUERIES
 import { getCollectionQuery, getCollectionsQuery } from './queries/collection.storefront'
-import { getProductQuery, getProductsByHandleQuery, predictiveSearchQuery, searchProductsQuery } from './queries/product.storefront'
+import { getProductQuery, getProductRecommendationsQuery, getProductsByHandleQuery, predictiveSearchQuery, searchProductsQuery } from './queries/product.storefront'
 import { getAdminProductQuery, getProductStatusQuery } from './queries/product.admin'
 import { getLatestProductFeedQuery } from './queries/product-feed.admin'
 import { getPageQuery, getPagesQuery } from './queries/page.storefront'
@@ -64,6 +65,7 @@ import { AdminApiClient, createAdminApiClient } from '@shopify/admin-api-client'
 
 // NORMALIZERS
 import { normalizeCart, normalizeCollection, normalizeProduct } from './normalize'
+import { denormalizeId } from '@/lib/utils'
 
 
 interface CreateShopifyClientProps {
@@ -102,6 +104,7 @@ export function createShopifyClient({ storefrontAccessToken, adminAccessToken, s
     
     getPredictiveSearchResults: async (query: string, limit: number, limitScope: 'ALL' | 'EACH') => getPredictiveSearchResults(client!, query, limit, limitScope),
     searchProducts: async (query: string, first: number) => searchProducts(client!, query, first),
+    getProductRecommendations: async (id: string) => getProductRecommendations(client!, id),
     getProductByHandle: async (handle: string) => getProductByHandle(client!, handle),
     getProductStatus: async (id: string) => getProductStatus(adminClient!, id),
     getAdminProduct: async (id: string) => getAdminProduct(adminClient, id),
@@ -204,6 +207,13 @@ async function getProductStatus(client: AdminApiClient, id: string): Promise<Pla
   const status = await client.request<ProductStatusQuery>(getProductStatusQuery, { variables: { id } })
 
   return status.data?.product
+}
+
+async function getProductRecommendations(client: StorefrontApiClient, id: string): Promise<PlatformProduct[] | undefined | null> {
+  const productId = denormalizeId(id)
+  const recommendedProducts = await client.request<ProductRecommendationsQuery>(getProductRecommendationsQuery, { variables: { productId } })
+
+  return recommendedProducts.data?.productRecommendations?.map((product) => normalizeProduct(product)).filter(Boolean) as PlatformProduct[] || []
 }
 
 async function createCart(client: StorefrontApiClient, items: PlatformItemInput[]): Promise<PlatformCart | undefined | null> {

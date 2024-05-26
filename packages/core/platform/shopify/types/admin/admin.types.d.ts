@@ -2056,80 +2056,182 @@ export type CalculatedDiscountCodeApplication = CalculatedDiscountApplication & 
   value: PricingValue;
 };
 
-/** The computed properties for a draft order. */
+/**
+ * The calculated fields for a draft order.
+ *
+ */
 export type CalculatedDraftOrder = {
   __typename?: 'CalculatedDraftOrder';
-  /** Order-level discount applied to the draft order. */
-  appliedDiscount?: Maybe<DraftOrderAppliedDiscount>;
-  /** The available shipping rates for the draft order. Requires a customer with a valid shipping address and at least one line item. */
-  availableShippingRates: Array<ShippingRate>;
-  /** Whether the billing address matches the shipping address. */
-  billingAddressMatchesShippingAddress: Scalars['Boolean']['output'];
-  /** The currency of the store for this draft order. */
-  currencyCode: CurrencyCode;
-  /** Customer who will be sent an invoice for the draft order, if there's one. */
-  customer?: Maybe<Customer>;
-  /** Line items in the draft order with their computed properties. */
-  lineItems: Array<CalculatedDraftOrderLineItem>;
-  /** A subtotal of the line items and corresponding discounts. The subtotal doesn't include shipping charges, shipping discounts, taxes, or order discounts. */
-  lineItemsSubtotalPrice: MoneyBag;
-  /** The name of the selected market. */
-  marketName: Scalars['String']['output'];
-  /** The selected country code that determines the pricing of the draft order. */
-  marketRegionCountryCode: CountryCode;
-  /** Phone number assigned to draft order. */
-  phone?: Maybe<Scalars['String']['output']>;
-  /** The payment currency of the customer for this draft order. */
-  presentmentCurrencyCode: CurrencyCode;
-  /** The purchasing entity for the draft order. */
-  purchasingEntity?: Maybe<PurchasingEntity>;
-  /** Line item that contains the shipping costs. */
-  shippingLine?: Maybe<ShippingLine>;
   /**
-   * Subtotal of the line items and their discounts (doesn't contain shipping charges or shipping discounts, or taxes).
+   * The custom order-level discount applied.
    *
    */
+  appliedDiscount?: Maybe<DraftOrderAppliedDiscount>;
+  /**
+   * The available shipping rates.
+   * Requires a customer with a valid shipping address and at least one line item.
+   *
+   */
+  availableShippingRates: Array<ShippingRate>;
+  /**
+   * Whether the billing address matches the shipping address.
+   *
+   */
+  billingAddressMatchesShippingAddress: Scalars['Boolean']['output'];
+  /**
+   * The shop currency used for calculation.
+   *
+   */
+  currencyCode: CurrencyCode;
+  /**
+   * The customer who will be sent an invoice.
+   *
+   */
+  customer?: Maybe<Customer>;
+  /**
+   * The list of the line items in the calculated draft order.
+   *
+   */
+  lineItems: Array<CalculatedDraftOrderLineItem>;
+  /**
+   * A subtotal of the line items and corresponding discounts,
+   * excluding include shipping charges, shipping discounts, taxes, or order discounts.
+   *
+   */
+  lineItemsSubtotalPrice: MoneyBag;
+  /**
+   * The name of the selected market.
+   *
+   */
+  marketName: Scalars['String']['output'];
+  /**
+   * The selected country code that determines the pricing.
+   *
+   */
+  marketRegionCountryCode: CountryCode;
+  /**
+   * The assigned phone number.
+   *
+   */
+  phone?: Maybe<Scalars['String']['output']>;
+  /**
+   * The payment currency used for calculation.
+   *
+   */
+  presentmentCurrencyCode: CurrencyCode;
+  /**
+   * The purchasing entity.
+   *
+   */
+  purchasingEntity?: Maybe<PurchasingEntity>;
+  /**
+   * The line item containing the shipping information and costs.
+   *
+   */
+  shippingLine?: Maybe<ShippingLine>;
+  /**
+   * The subtotal, in shop currency, of the line items and their discounts, excluding shipping charges, shipping discounts, and taxes.
+   *
+   * @deprecated Use `subtotalPriceSet` instead.
+   */
   subtotalPrice: Scalars['Money']['output'];
-  /** Subtotal of the line items and their discounts (doesn't contain shipping charges or shipping discounts, or taxes). */
+  /**
+   * The subtotal, of the line items and their discounts, excluding shipping charges, shipping discounts, and taxes.
+   *
+   */
   subtotalPriceSet: MoneyBag;
-  /** Total amount of taxes charged for each line item and shipping line. */
+  /**
+   * The list of of taxes lines charged for each line item and shipping line.
+   *
+   */
   taxLines: Array<TaxLine>;
-  /** Total discounts for this draft order. */
+  /**
+   * Total discounts.
+   *
+   */
   totalDiscountsSet: MoneyBag;
-  /** Total price of line items for this draft order. */
+  /**
+   * Total price of line items.
+   *
+   */
   totalLineItemsPriceSet: MoneyBag;
-  /** Total amount of the draft order (includes taxes, shipping charges, and discounts). */
+  /**
+   * The total price, in shop currency, includes taxes, shipping charges, and discounts.
+   *
+   * @deprecated Use `totalPriceSet` instead.
+   */
   totalPrice: Scalars['Money']['output'];
-  /** Total amount of the draft order(includes taxes, shipping charges, and discounts). */
+  /**
+   * The total price, includes taxes, shipping charges, and discounts.
+   *
+   */
   totalPriceSet: MoneyBag;
-  /** Total shipping charge for the draft order. */
+  /**
+   * The total shipping price in shop currency.
+   *
+   * @deprecated Use `totalShippingPriceSet` instead.
+   */
   totalShippingPrice: Scalars['Money']['output'];
-  /** Total shipping charge for the draft order. */
+  /**
+   * The total shipping price.
+   *
+   */
   totalShippingPriceSet: MoneyBag;
-  /** Total amount of taxes for the draft order. */
+  /**
+   * The total tax in shop currency.
+   *
+   * @deprecated Use `totalTaxSet` instead.
+   */
   totalTax: Scalars['Money']['output'];
-  /** Total amount of taxes for the draft order. */
+  /**
+   * The total tax.
+   *
+   */
   totalTaxSet: MoneyBag;
 };
 
-/** The computed line items for a draft order. */
+/**
+ * The calculated line item for a draft order.
+ *
+ */
 export type CalculatedDraftOrderLineItem = {
   __typename?: 'CalculatedDraftOrderLineItem';
-  /** The discount applied to the line item. */
+  /**
+   * The custom applied discount.
+   *
+   */
   appliedDiscount?: Maybe<DraftOrderAppliedDiscount>;
-  /** Whether the line item is a custom line item (`true`) or a product variant line item (`false`). */
+  /**
+   * Whether the line item is custom (`true`) or contains a product variant (`false`).
+   *
+   */
   custom: Scalars['Boolean']['output'];
   /** A list of attributes that represent custom features or special requests. */
   customAttributes: Array<Attribute>;
-  /** Additional information (metafields) about the line item with the associated types. */
+  /**
+   * The list of additional information (metafields) with the associated types.
+   *
+   */
   customAttributesV2: Array<TypedAttribute>;
-  /** Total price with discounts applied. */
+  /**
+   * The total price with discounts applied.
+   *
+   */
   discountedTotal: MoneyV2;
-  /** The total price with discounts applied. */
+  /**
+   * The total price with discounts applied.
+   *
+   */
   discountedTotalSet: MoneyBag;
-  /** The unit price with discounts applied. */
+  /**
+   * The unit price with discounts applied.
+   *
+   */
   discountedUnitPrice: MoneyV2;
-  /** Unit price with discounts applied. */
+  /**
+   * The unit price with discounts applied.
+   *
+   */
   discountedUnitPriceSet: MoneyBag;
   /**
    * Name of the service provider who fulfilled the order.
@@ -2141,26 +2243,45 @@ export type CalculatedDraftOrderLineItem = {
    *
    */
   fulfillmentService?: Maybe<FulfillmentService>;
-  /** The image associated with the draft order line item. */
+  /**
+   * The image associated with the draft order line item.
+   *
+   */
   image?: Maybe<Image>;
   /** Whether the line item represents the purchase of a gift card. */
   isGiftCard: Scalars['Boolean']['output'];
   /** The name of the product. */
   name: Scalars['String']['output'];
   /**
-   * The total price (without discounts) of the line item, based on the original unit price of the variant x quantity.
+   * The total price, excluding discounts, equal to the original unit price multiplied by quantity.
    *
    */
   originalTotal: MoneyV2;
-  /** The total price (without discounts) of the line item, based on the original unit price of the variant x quantity. */
+  /**
+   * The total price excluding discounts, equal to the original unit price multiplied by quantity.
+   *
+   */
   originalTotalSet: MoneyBag;
-  /** The variant price without any discounts applied. */
+  /**
+   * The line item price without any discounts applied.
+   *
+   */
   originalUnitPrice: MoneyV2;
-  /** The variant price without any discounts applied. */
+  /**
+   * The price without any discounts applied.
+   *
+   */
   originalUnitPriceSet: MoneyBag;
-  /** The product associated with the draft order line item. */
+  /**
+   * The product for the line item.
+   *
+   */
   product?: Maybe<Product>;
-  /** The number of variant items requested in the draft order. */
+  /**
+   * The quantity of items. For a bundle item, this is the quantity of bundles,
+   * not the quantity of items contained in the bundles themselves.
+   *
+   */
   quantity: Scalars['Int']['output'];
   /** Whether physical shipping is required for the variant. */
   requiresShipping: Scalars['Boolean']['output'];
@@ -2170,17 +2291,29 @@ export type CalculatedDraftOrderLineItem = {
   taxable: Scalars['Boolean']['output'];
   /** The title of the product or variant. This field only applies to custom line items. */
   title: Scalars['String']['output'];
-  /** The total value of the discount. */
+  /**
+   * The total value of the discount.
+   *
+   */
   totalDiscount: MoneyV2;
-  /** The total value of the discount. */
+  /**
+   * The total discount amount.
+   *
+   */
   totalDiscountSet: MoneyBag;
-  /** The variant associated with the draft order line item. */
+  /**
+   * The product variant for the line item.
+   *
+   */
   variant?: Maybe<ProductVariant>;
   /** The name of the variant. */
   variantTitle?: Maybe<Scalars['String']['output']>;
   /** The name of the vendor who created the product variant. */
   vendor?: Maybe<Scalars['String']['output']>;
-  /** The weight unit and value for a draft order line item. */
+  /**
+   * The weight unit and value.
+   *
+   */
   weight?: Maybe<Weight>;
 };
 
@@ -11582,6 +11715,15 @@ export type DeliveryProfileConnection = {
   pageInfo: PageInfo;
 };
 
+/** Return type for `deliveryProfileCreate` mutation. */
+export type DeliveryProfileCreatePayload = {
+  __typename?: 'DeliveryProfileCreatePayload';
+  /** The delivery profile that was created. */
+  profile?: Maybe<DeliveryProfile>;
+  /** The list of errors that occurred from executing the mutation. */
+  userErrors: Array<UserError>;
+};
+
 /**
  * An auto-generated type which holds one DeliveryProfile and a cursor during pagination.
  *
@@ -11738,6 +11880,24 @@ export type DeliveryProfileLocationGroupInput = {
    *
    */
   zonesToUpdate?: InputMaybe<Array<DeliveryLocationGroupZoneInput>>;
+};
+
+/** Return type for `deliveryProfileRemove` mutation. */
+export type DeliveryProfileRemovePayload = {
+  __typename?: 'DeliveryProfileRemovePayload';
+  /** The delivery profile deletion job triggered by the mutation. */
+  job?: Maybe<Job>;
+  /** The list of errors that occurred from executing the mutation. */
+  userErrors: Array<UserError>;
+};
+
+/** Return type for `deliveryProfileUpdate` mutation. */
+export type DeliveryProfileUpdatePayload = {
+  __typename?: 'DeliveryProfileUpdatePayload';
+  /** The delivery profile that was updated. */
+  profile?: Maybe<DeliveryProfile>;
+  /** The list of errors that occurred from executing the mutation. */
+  userErrors: Array<UserError>;
 };
 
 /** A region that is used to define a shipping zone. */
@@ -14004,32 +14164,41 @@ export type DomainLocalization = {
  * - Take pre-orders.
  * - Save an order as a draft and resume working on it later.
  *
- * For Draft orders in multiple currencies `presentment_money` is the source of truth for what a customer is going to be charged and `shop_money` is an estimate of what the merchant might receive in their local currency.
+ * For draft orders in multiple currencies `presentment_money` is the source of truth for what a customer is going to be charged and `shop_money` is an estimate of what the merchant might receive in their shop currency.
  *
  * **Caution:** Only use this data if it's required for your app's functionality. Shopify will restrict [access to scopes](https://shopify.dev/api/usage/access-scopes) for apps that don't have a legitimate use for the associated data.
  *
  */
 export type DraftOrder = CommentEventSubject & HasEvents & HasLocalizationExtensions & HasMetafields & LegacyInteroperability & Navigable & Node & {
   __typename?: 'DraftOrder';
-  /** The order-level discount applied to the draft order. */
+  /**
+   * The custom order-level discount applied.
+   *
+   */
   appliedDiscount?: Maybe<DraftOrderAppliedDiscount>;
   /**
    * The billing address of the customer.
    *
    */
   billingAddress?: Maybe<MailingAddress>;
-  /** Whether the billing address matches the shipping address. */
+  /**
+   * Whether the billing address matches the shipping address.
+   *
+   */
   billingAddressMatchesShippingAddress: Scalars['Boolean']['output'];
   /**
-   * The date and time when the draft order converted to a new order,
-   * and the draft order's status changed to **Completed**.
+   * The date and time when the draft order was converted to a new order,
+   * and had it's status changed to **Completed**.
    *
    */
   completedAt?: Maybe<Scalars['DateTime']['output']>;
-  /** The date and time when the draft order was created in Shopify. */
+  /**
+   * The date and time when the draft order was created in Shopify.
+   *
+   */
   createdAt: Scalars['DateTime']['output'];
   /**
-   * The three letter code for the currency of the store at the time of the most recent update to the draft order.
+   * The shop currency used for calculation.
    *
    */
   currencyCode: CurrencyCode;
@@ -14038,38 +14207,72 @@ export type DraftOrder = CommentEventSubject & HasEvents & HasLocalizationExtens
    *
    */
   customAttributes: Array<Attribute>;
-  /** The customer who will be sent an invoice for the draft order, if there is one. */
+  /**
+   * The customer who will be sent an invoice.
+   *
+   */
   customer?: Maybe<Customer>;
   /**
    * A default cursor that returns the single next record, sorted ascending by ID.
    *
    */
   defaultCursor: Scalars['String']['output'];
-  /** The email address of the customer, which is used to send notifications. */
+  /**
+   * The email address of the customer, which is used to send notifications.
+   *
+   */
   email?: Maybe<Scalars['String']['output']>;
-  /** The list of events associated with the draft order. */
+  /**
+   * The list of events associated with the draft order.
+   *
+   */
   events: EventConnection;
-  /** Whether the merchant has added timeline comments to the draft order. */
+  /**
+   * Whether the merchant has added timeline comments to the draft order.
+   *
+   */
   hasTimelineComment: Scalars['Boolean']['output'];
   /** A globally-unique ID. */
   id: Scalars['ID']['output'];
-  /** The subject defined for the draft invoice email template. */
+  /**
+   * The subject defined for the draft invoice email template.
+   *
+   */
   invoiceEmailTemplateSubject: Scalars['String']['output'];
-  /** The date and time when the invoice was last emailed to the customer. */
+  /**
+   * The date and time when the invoice was last emailed to the customer.
+   *
+   */
   invoiceSentAt?: Maybe<Scalars['DateTime']['output']>;
-  /** The link to the checkout, which is sent to the customer in the invoice email. */
+  /**
+   * The link to the checkout, which is sent to the customer in the invoice email.
+   *
+   */
   invoiceUrl?: Maybe<Scalars['URL']['output']>;
   /** The ID of the corresponding resource in the REST Admin API. */
   legacyResourceId: Scalars['UnsignedInt64']['output'];
-  /** The list of the line items in the draft order. */
+  /**
+   * The list of the line items in the draft order.
+   *
+   */
   lineItems: DraftOrderLineItemConnection;
-  /** The subtotal of the line items and corresponding discounts. The subtotal doesn't include shipping charges, shipping discounts, taxes, or order discounts. */
+  /**
+   * A subtotal of the line items and corresponding discounts,
+   * excluding include shipping charges, shipping discounts, taxes, or order discounts.
+   *
+   */
   lineItemsSubtotalPrice: MoneyBag;
   /** List of localization extensions for the resource. */
   localizationExtensions: LocalizationExtensionConnection;
-  /** The name of the selected market. */
+  /**
+   * The name of the selected market.
+   *
+   */
   marketName: Scalars['String']['output'];
-  /** The selected country code that determines the pricing of the draft order. */
+  /**
+   * The selected country code that determines the pricing.
+   *
+   */
   marketRegionCountryCode: CountryCode;
   /** Returns a metafield by namespace and key that belongs to the resource. */
   metafield?: Maybe<Metafield>;
@@ -14080,17 +14283,35 @@ export type DraftOrder = CommentEventSubject & HasEvents & HasLocalizationExtens
    *
    */
   name: Scalars['String']['output'];
-  /** The text from an optional note attached to the draft order. */
+  /**
+   * The text from an optional note attached to the draft order.
+   *
+   */
   note2?: Maybe<Scalars['String']['output']>;
-  /** The order that was created from this draft order. */
+  /**
+   * The order that was created from the draft order.
+   *
+   */
   order?: Maybe<Order>;
-  /** The associated payment terms for this draft order. */
+  /**
+   * The associated payment terms for this draft order.
+   *
+   */
   paymentTerms?: Maybe<PaymentTerms>;
-  /** The phone number assigned to the draft order. */
+  /**
+   * The assigned phone number.
+   *
+   */
   phone?: Maybe<Scalars['String']['output']>;
-  /** The purchase order number. */
+  /**
+   * The purchase order number.
+   *
+   */
   poNumber?: Maybe<Scalars['String']['output']>;
-  /** The payment currency of the customer for this draft order. */
+  /**
+   * The payment currency used for calculation.
+   *
+   */
   presentmentCurrencyCode: CurrencyCode;
   /**
    * Returns a private metafield by namespace and key that belongs to the resource.
@@ -14106,56 +14327,117 @@ export type DraftOrder = CommentEventSubject & HasEvents & HasLocalizationExtens
    *
    */
   privateMetafields: PrivateMetafieldConnection;
-  /** The purchasing entity for the draft order. */
-  purchasingEntity?: Maybe<PurchasingEntity>;
-  /** Whether the Draft Order is ready and can be completed. Draft Orders might have asynchronous operations that can take time to finish. */
-  ready: Scalars['Boolean']['output'];
-  /** The time after which inventory will automatically be restocked. */
-  reserveInventoryUntil?: Maybe<Scalars['DateTime']['output']>;
-  /** The shipping address of the customer. */
-  shippingAddress?: Maybe<MailingAddress>;
-  /** The line item that contains the shipping costs. */
-  shippingLine?: Maybe<ShippingLine>;
-  /** Status of the draft order. */
-  status: DraftOrderStatus;
   /**
-   * The subtotal of the line items and their discounts. The subtotal doesn't include shipping charges, shipping discounts, or taxes.
+   * The purchasing entity.
    *
    */
+  purchasingEntity?: Maybe<PurchasingEntity>;
+  /**
+   * Whether the draft order is ready and can be completed.
+   * Draft orders might have asynchronous operations that can take time to finish.
+   *
+   */
+  ready: Scalars['Boolean']['output'];
+  /**
+   * The time after which inventory will automatically be restocked.
+   *
+   */
+  reserveInventoryUntil?: Maybe<Scalars['DateTime']['output']>;
+  /**
+   * The shipping address of the customer.
+   *
+   */
+  shippingAddress?: Maybe<MailingAddress>;
+  /**
+   * The line item containing the shipping information and costs.
+   *
+   */
+  shippingLine?: Maybe<ShippingLine>;
+  /**
+   * The status of the draft order.
+   *
+   */
+  status: DraftOrderStatus;
+  /**
+   * The subtotal, in shop currency, of the line items and their discounts, excluding shipping charges, shipping discounts, and taxes.
+   *
+   * @deprecated Use `subtotalPriceSet` instead.
+   */
   subtotalPrice: Scalars['Money']['output'];
-  /** A subtotal of the line items and corresponding discounts. The subtotal doesn't include shipping charges, shipping discounts, or taxes. */
+  /**
+   * The subtotal, of the line items and their discounts, excluding shipping charges, shipping discounts, and taxes.
+   *
+   */
   subtotalPriceSet: MoneyBag;
   /**
-   * A comma separated list of tags associated with the draft order. Updating `tags` overwrites
-   * any existing tags that were previously added to the draft order. To add new tags without overwriting
-   * existing tags, use the [tagsAdd](https://shopify.dev/api/admin-graphql/latest/mutations/tagsadd)
-   * mutation.
+   * The comma separated list of tags associated with the draft order.
+   * Updating `tags` overwrites any existing tags that were previously added to the draft order.
+   * To add new tags without overwriting existing tags, use the [tagsAdd](https://shopify.dev/api/admin-graphql/latest/mutations/tagsadd) mutation.
    *
    */
   tags: Array<Scalars['String']['output']>;
-  /** Whether the draft order is tax exempt. */
+  /**
+   * Whether the draft order is tax exempt.
+   *
+   */
   taxExempt: Scalars['Boolean']['output'];
-  /** Total amount of taxes charged for each line item and shipping line. */
+  /**
+   * The list of of taxes lines charged for each line item and shipping line.
+   *
+   */
   taxLines: Array<TaxLine>;
-  /** Whether the line item prices include taxes. */
+  /**
+   * Whether the line item prices include taxes.
+   *
+   */
   taxesIncluded: Scalars['Boolean']['output'];
-  /** The total discounts for this draft order. */
+  /**
+   * Total discounts.
+   *
+   */
   totalDiscountsSet: MoneyBag;
-  /** The total price of line items for this draft order. */
+  /**
+   * Total price of line items.
+   *
+   */
   totalLineItemsPriceSet: MoneyBag;
-  /** The total amount of the draft order, including taxes, shipping charges, and discounts. */
+  /**
+   * The total price, in shop currency, includes taxes, shipping charges, and discounts.
+   *
+   * @deprecated Use `totalPriceSet` instead.
+   */
   totalPrice: Scalars['Money']['output'];
-  /** The total amount of the draft order including taxes, shipping charges, and discounts. */
+  /**
+   * The total price, includes taxes, shipping charges, and discounts.
+   *
+   */
   totalPriceSet: MoneyBag;
-  /** The total shipping charge for the draft order. */
+  /**
+   * The total shipping price in shop currency.
+   *
+   * @deprecated Use `totalShippingPriceSet` instead.
+   */
   totalShippingPrice: Scalars['Money']['output'];
-  /** The total shipping charge for the draft order. */
+  /**
+   * The total shipping price.
+   *
+   */
   totalShippingPriceSet: MoneyBag;
-  /** The total amount of taxes for the draft order. */
+  /**
+   * The total tax in shop currency.
+   *
+   * @deprecated Use `totalTaxSet` instead.
+   */
   totalTax: Scalars['Money']['output'];
-  /** The total amount of taxes for the draft order. */
+  /**
+   * The total tax.
+   *
+   */
   totalTaxSet: MoneyBag;
-  /** The total weight in grams of the draft order. */
+  /**
+   * The total weight in grams of the draft order.
+   *
+   */
   totalWeight: Scalars['UnsignedInt64']['output'];
   /**
    * The date and time when the draft order was last changed.
@@ -14163,7 +14445,10 @@ export type DraftOrder = CommentEventSubject & HasEvents & HasLocalizationExtens
    *
    */
   updatedAt: Scalars['DateTime']['output'];
-  /** Whether the draft order will be visible to the customer on the self-serve portal. */
+  /**
+   * Whether the draft order will be visible to the customer on the self-serve portal.
+   *
+   */
   visibleToCustomer: Scalars['Boolean']['output'];
 };
 
@@ -14179,7 +14464,7 @@ export type DraftOrder = CommentEventSubject & HasEvents & HasLocalizationExtens
  * - Take pre-orders.
  * - Save an order as a draft and resume working on it later.
  *
- * For Draft orders in multiple currencies `presentment_money` is the source of truth for what a customer is going to be charged and `shop_money` is an estimate of what the merchant might receive in their local currency.
+ * For draft orders in multiple currencies `presentment_money` is the source of truth for what a customer is going to be charged and `shop_money` is an estimate of what the merchant might receive in their shop currency.
  *
  * **Caution:** Only use this data if it's required for your app's functionality. Shopify will restrict [access to scopes](https://shopify.dev/api/usage/access-scopes) for apps that don't have a legitimate use for the associated data.
  *
@@ -14206,7 +14491,7 @@ export type DraftOrderEventsArgs = {
  * - Take pre-orders.
  * - Save an order as a draft and resume working on it later.
  *
- * For Draft orders in multiple currencies `presentment_money` is the source of truth for what a customer is going to be charged and `shop_money` is an estimate of what the merchant might receive in their local currency.
+ * For draft orders in multiple currencies `presentment_money` is the source of truth for what a customer is going to be charged and `shop_money` is an estimate of what the merchant might receive in their shop currency.
  *
  * **Caution:** Only use this data if it's required for your app's functionality. Shopify will restrict [access to scopes](https://shopify.dev/api/usage/access-scopes) for apps that don't have a legitimate use for the associated data.
  *
@@ -14231,7 +14516,7 @@ export type DraftOrderLineItemsArgs = {
  * - Take pre-orders.
  * - Save an order as a draft and resume working on it later.
  *
- * For Draft orders in multiple currencies `presentment_money` is the source of truth for what a customer is going to be charged and `shop_money` is an estimate of what the merchant might receive in their local currency.
+ * For draft orders in multiple currencies `presentment_money` is the source of truth for what a customer is going to be charged and `shop_money` is an estimate of what the merchant might receive in their shop currency.
  *
  * **Caution:** Only use this data if it's required for your app's functionality. Shopify will restrict [access to scopes](https://shopify.dev/api/usage/access-scopes) for apps that don't have a legitimate use for the associated data.
  *
@@ -14258,7 +14543,7 @@ export type DraftOrderLocalizationExtensionsArgs = {
  * - Take pre-orders.
  * - Save an order as a draft and resume working on it later.
  *
- * For Draft orders in multiple currencies `presentment_money` is the source of truth for what a customer is going to be charged and `shop_money` is an estimate of what the merchant might receive in their local currency.
+ * For draft orders in multiple currencies `presentment_money` is the source of truth for what a customer is going to be charged and `shop_money` is an estimate of what the merchant might receive in their shop currency.
  *
  * **Caution:** Only use this data if it's required for your app's functionality. Shopify will restrict [access to scopes](https://shopify.dev/api/usage/access-scopes) for apps that don't have a legitimate use for the associated data.
  *
@@ -14280,7 +14565,7 @@ export type DraftOrderMetafieldArgs = {
  * - Take pre-orders.
  * - Save an order as a draft and resume working on it later.
  *
- * For Draft orders in multiple currencies `presentment_money` is the source of truth for what a customer is going to be charged and `shop_money` is an estimate of what the merchant might receive in their local currency.
+ * For draft orders in multiple currencies `presentment_money` is the source of truth for what a customer is going to be charged and `shop_money` is an estimate of what the merchant might receive in their shop currency.
  *
  * **Caution:** Only use this data if it's required for your app's functionality. Shopify will restrict [access to scopes](https://shopify.dev/api/usage/access-scopes) for apps that don't have a legitimate use for the associated data.
  *
@@ -14307,7 +14592,7 @@ export type DraftOrderMetafieldsArgs = {
  * - Take pre-orders.
  * - Save an order as a draft and resume working on it later.
  *
- * For Draft orders in multiple currencies `presentment_money` is the source of truth for what a customer is going to be charged and `shop_money` is an estimate of what the merchant might receive in their local currency.
+ * For draft orders in multiple currencies `presentment_money` is the source of truth for what a customer is going to be charged and `shop_money` is an estimate of what the merchant might receive in their shop currency.
  *
  * **Caution:** Only use this data if it's required for your app's functionality. Shopify will restrict [access to scopes](https://shopify.dev/api/usage/access-scopes) for apps that don't have a legitimate use for the associated data.
  *
@@ -14329,7 +14614,7 @@ export type DraftOrderPrivateMetafieldArgs = {
  * - Take pre-orders.
  * - Save an order as a draft and resume working on it later.
  *
- * For Draft orders in multiple currencies `presentment_money` is the source of truth for what a customer is going to be charged and `shop_money` is an estimate of what the merchant might receive in their local currency.
+ * For draft orders in multiple currencies `presentment_money` is the source of truth for what a customer is going to be charged and `shop_money` is an estimate of what the merchant might receive in their shop currency.
  *
  * **Caution:** Only use this data if it's required for your app's functionality. Shopify will restrict [access to scopes](https://shopify.dev/api/usage/access-scopes) for apps that don't have a legitimate use for the associated data.
  *
@@ -14347,17 +14632,31 @@ export type DraftOrderPrivateMetafieldsArgs = {
 export type DraftOrderAppliedDiscount = {
   __typename?: 'DraftOrderAppliedDiscount';
   /**
-   * Amount of the order-level discount that's applied to the draft order.
-   * @deprecated Use `amountV2` instead.
+   * Amount of the order-level discount that's applied to the draft order in shop currency.
+   *
+   * @deprecated Use `amountSet` instead.
    */
   amount: Scalars['Money']['output'];
-  /** The amount of money discounted, with values shown in both shop currency and presentment currency. */
+  /**
+   * The amount of money discounted, with values shown in both shop currency and presentment currency.
+   *
+   */
   amountSet: MoneyBag;
-  /** Amount of money discounted. */
+  /**
+   * Amount of money discounted.
+   *
+   * @deprecated Use `amountSet` instead.
+   */
   amountV2: MoneyV2;
-  /** Description of the order-level discount. */
+  /**
+   * Description of the order-level discount.
+   *
+   */
   description: Scalars['String']['output'];
-  /** Name of the order-level discount. */
+  /**
+   * Name of the order-level discount.
+   *
+   */
   title?: Maybe<Scalars['String']['output']>;
   /**
    * The order level discount amount. If `valueType` is `"percentage"`,
@@ -14365,19 +14664,15 @@ export type DraftOrderAppliedDiscount = {
    *
    */
   value: Scalars['Float']['output'];
-  /** Type of the order-level discount. */
+  /**
+   * Type of the order-level discount.
+   *
+   */
   valueType: DraftOrderAppliedDiscountType;
 };
 
 /** The input fields for applying an order-level discount to a draft order. */
 export type DraftOrderAppliedDiscountInput = {
-  /**
-   * The applied amount of the discount.
-   * If the type of the discount is fixed amount, then this is the fixed dollar amount.
-   * If the type is percentage, then this is the subtotal multiplied by the percentage.
-   *
-   */
-  amount?: InputMaybe<Scalars['Money']['input']>;
   /**
    * Reason for the discount.
    *
@@ -14390,7 +14685,7 @@ export type DraftOrderAppliedDiscountInput = {
   title?: InputMaybe<Scalars['String']['input']>;
   /**
    * The value of the discount.
-   * If the type of the discount is fixed amount, then this is a fixed dollar amount.
+   * If the type of the discount is fixed amount, then this is a fixed amount in your shop currency.
    * If the type is percentage, then this is the percentage.
    *
    */
@@ -14449,7 +14744,10 @@ export type DraftOrderCalculatePayload = {
 /** Return type for `draftOrderComplete` mutation. */
 export type DraftOrderCompletePayload = {
   __typename?: 'DraftOrderCompletePayload';
-  /** The completed draft order. */
+  /**
+   * The completed draft order.
+   *
+   */
   draftOrder?: Maybe<DraftOrder>;
   /** The list of errors that occurred from executing the mutation. */
   userErrors: Array<UserError>;
@@ -14472,7 +14770,7 @@ export type DraftOrderConnection = {
 /** Return type for `draftOrderCreateFromOrder` mutation. */
 export type DraftOrderCreateFromOrderPayload = {
   __typename?: 'DraftOrderCreateFromOrderPayload';
-  /** The created Draft Order. */
+  /** The created draft order. */
   draftOrder?: Maybe<DraftOrder>;
   /** The list of errors that occurred from executing the mutation. */
   userErrors: Array<UserError>;
@@ -14553,7 +14851,7 @@ export type DraftOrderInput = {
    */
   billingAddress?: InputMaybe<MailingAddressInput>;
   /**
-   * Extra information added to the customer.
+   * The extra information added to the customer.
    *
    */
   customAttributes?: InputMaybe<Array<AttributeInput>>;
@@ -14563,19 +14861,25 @@ export type DraftOrderInput = {
    */
   email?: InputMaybe<Scalars['String']['input']>;
   /**
-   * Product variant line item or custom line item associated to the draft order.
+   * The list of product variant or custom line item.
    * Each draft order must include at least one line item.
    *
    * NOTE: Draft orders don't currently support subscriptions.
    *
    */
   lineItems?: InputMaybe<Array<DraftOrderLineItemInput>>;
-  /** The localization extensions attached to the draft order. For example, Tax IDs. */
+  /**
+   * The localization extensions attached to the draft order. For example, Tax IDs.
+   *
+   */
   localizationExtensions?: InputMaybe<Array<LocalizationExtensionInput>>;
-  /** The selected country code that determines the pricing of the draft order. */
+  /**
+   * The selected country code that determines the pricing of the draft order.
+   *
+   */
   marketRegionCountryCode?: InputMaybe<CountryCode>;
   /**
-   * Metafields attached to the draft order. An existing metafield can not be used when creating a draft order.
+   * The list of metafields attached to the draft order. An existing metafield can not be used when creating a draft order.
    *
    */
   metafields?: InputMaybe<Array<MetafieldInput>>;
@@ -14584,17 +14888,35 @@ export type DraftOrderInput = {
    *
    */
   note?: InputMaybe<Scalars['String']['input']>;
-  /** The fields used to create payment terms. */
+  /**
+   * The fields used to create payment terms.
+   *
+   */
   paymentTerms?: InputMaybe<PaymentTermsInput>;
-  /** The customer's phone number. */
+  /**
+   * The customer's phone number.
+   *
+   */
   phone?: InputMaybe<Scalars['String']['input']>;
-  /** The purchase order number. */
+  /**
+   * The purchase order number.
+   *
+   */
   poNumber?: InputMaybe<Scalars['String']['input']>;
-  /** The payment currency of the customer for this draft order. */
+  /**
+   * The payment currency of the customer for this draft order.
+   *
+   */
   presentmentCurrencyCode?: InputMaybe<CurrencyCode>;
-  /** The purchasing entity for this draft order. */
+  /**
+   * The purchasing entity for the draft order.
+   *
+   */
   purchasingEntity?: InputMaybe<PurchasingEntityInput>;
-  /** Time after which inventory will automatically be restocked. */
+  /**
+   * The time after which inventory reservation will expire.
+   *
+   */
   reserveInventoryUntil?: InputMaybe<Scalars['DateTime']['input']>;
   /**
    * The mailing address to where the order will be shipped.
@@ -14602,19 +14924,20 @@ export type DraftOrderInput = {
    */
   shippingAddress?: InputMaybe<MailingAddressInput>;
   /**
-   * A shipping line object, which details the shipping method used.
+   * The shipping line object, which details the shipping method used.
    *
    */
   shippingLine?: InputMaybe<ShippingLineInput>;
   /**
    * The source of the checkout.
-   *           To use this field for sales attribution, you must register the channels that your app is managing.
-   *           You can register the channels that your app is managing by completing
-   *           [this Google Form](https://docs.google.com/forms/d/e/1FAIpQLScmVTZRQNjOJ7RD738mL1lGeFjqKVe_FM2tO9xsm21QEo5Ozg/viewform?usp=sf_link).
-   *           After you've submitted your request, you need to wait for your request to be processed by Shopify.
-   *           You can find a list of your channels in the Partner Dashboard, in your app's Marketplace extension.
-   *           You need to specify the handle as the `source_name` value in your request.
-   *           The handle is the channel that the order was placed from.
+   * To use this field for sales attribution, you must register the channels that your app is managing.
+   * You can register the channels that your app is managing by completing
+   * [this Google Form](https://docs.google.com/forms/d/e/1FAIpQLScmVTZRQNjOJ7RD738mL1lGeFjqKVe_FM2tO9xsm21QEo5Ozg/viewform?usp=sf_link).
+   * After you've submitted your request, you need to wait for your request to be processed by Shopify.
+   * You can find a list of your channels in the Partner Dashboard, in your app's Marketplace extension.
+   * You need to specify the handle as the `source_name` value in your request.
+   * The handle is the channel that the order was placed from.
+   *
    */
   sourceName?: InputMaybe<Scalars['String']['input']>;
   /**
@@ -14630,11 +14953,14 @@ export type DraftOrderInput = {
    */
   taxExempt?: InputMaybe<Scalars['Boolean']['input']>;
   /**
-   * Sent as part of a draft order object to load customer shipping information.
+   * Whether to use the custoemr's default address.
    *
    */
   useCustomerDefaultAddress?: InputMaybe<Scalars['Boolean']['input']>;
-  /** Whether the draft order will be visible to the customer on the self-serve portal. */
+  /**
+   * Whether the draft order will be visible to the customer on the self-serve portal.
+   *
+   */
   visibleToCustomer?: InputMaybe<Scalars['Boolean']['input']>;
 };
 
@@ -14658,36 +14984,50 @@ export type DraftOrderInvoiceSendPayload = {
   userErrors: Array<UserError>;
 };
 
-/** A line item included in a draft order. */
+/**
+ * The line item for a draft order.
+ *
+ */
 export type DraftOrderLineItem = Node & {
   __typename?: 'DraftOrderLineItem';
   /**
-   * The discount that will be applied to the line item or the overall order.
+   * The custom applied discount.
    *
    */
   appliedDiscount?: Maybe<DraftOrderAppliedDiscount>;
   /**
-   * Whether the line item is a custom line item (`true`) or a product variant line item (`false`).
+   * Whether the line item is custom (`true`) or contains a product variant (`false`).
    *
    */
   custom: Scalars['Boolean']['output'];
   /** A list of attributes that represent custom features or special requests. */
   customAttributes: Array<Attribute>;
-  /** Additional information (metafields) about the line item with the associated types. */
+  /**
+   * The list of additional information (metafields) with the associated types.
+   *
+   */
   customAttributesV2: Array<TypedAttribute>;
   /**
-   * The line item price after discounts are applied.
+   * The line item price, in shop currency, after discounts are applied.
    *
+   * @deprecated Use `discountedTotalSet` instead.
    */
   discountedTotal: Scalars['Money']['output'];
-  /** The line item price after discounts are applied. */
-  discountedTotalSet: MoneyBag;
   /**
-   * The `discountedTotal` divided by `quantity`, resulting in the value of the discount per unit.
+   * The total price with discounts applied.
    *
    */
+  discountedTotalSet: MoneyBag;
+  /**
+   * The `discountedTotal` divided by `quantity`, equal to the value of the discount per unit in the shop currency.
+   *
+   * @deprecated Use `discountedUnitPriceSet` instead.
+   */
   discountedUnitPrice: Scalars['Money']['output'];
-  /** The `discountedTotal` divided by `quantity`, resulting in the value of the discount per unit. */
+  /**
+   * The unit price with discounts applied.
+   *
+   */
   discountedUnitPriceSet: MoneyBag;
   /**
    * Name of the service provider who fulfilled the order.
@@ -14700,44 +15040,61 @@ export type DraftOrderLineItem = Node & {
    */
   fulfillmentService?: Maybe<FulfillmentService>;
   /**
-   * The weight of the line item in grams. The weight can only be specified if the line item is a custom
-   * line item.
+   * The weight of the line item in grams.
    *
    * @deprecated Use `weight` instead.
    */
   grams?: Maybe<Scalars['Int']['output']>;
   /** A globally-unique ID. */
   id: Scalars['ID']['output'];
-  /** The image associated with the draft order line item. */
+  /**
+   * The image of the product variant.
+   *
+   */
   image?: Maybe<Image>;
   /** Whether the line item represents the purchase of a gift card. */
   isGiftCard: Scalars['Boolean']['output'];
   /** The name of the product. */
   name: Scalars['String']['output'];
   /**
-   * The total price (without discounts) of the line item, based on the original unit price of the variant x quantity.
+   * The total price, in shop currency, excluding discounts, equal to the original unit price multiplied by quantity.
    *
+   * @deprecated Use `originalTotalSet` instead.
    */
   originalTotal: Scalars['Money']['output'];
-  /** The total price (without discounts) of the line item,based on the original unit price of the variant x quantity. */
+  /**
+   * The total price excluding discounts, equal to the original unit price multiplied by quantity.
+   *
+   */
   originalTotalSet: MoneyBag;
-  /** The variant price without any discounts applied. */
+  /**
+   * The price, in shop currency, without any discounts applied.
+   *
+   * @deprecated Use `originalUnitPriceWithCurrency` instead.
+   */
   originalUnitPrice: Scalars['Money']['output'];
-  /** The variant price without any discounts applied. */
+  /**
+   * The price without any discounts applied.
+   *
+   */
   originalUnitPriceSet: MoneyBag;
   /**
-   * The product corresponding to the line item’s product variant.
+   * The product for the line item.
    *
    */
   product?: Maybe<Product>;
-  /** The number of product variants that are requested in the draft order. */
+  /**
+   * The quantity of items. For a bundle item, this is the quantity of bundles,
+   * not the quantity of items contained in the bundles themselves.
+   *
+   */
   quantity: Scalars['Int']['output'];
   /** Whether physical shipping is required for the variant. */
   requiresShipping: Scalars['Boolean']['output'];
   /** The SKU number of the product variant. */
   sku?: Maybe<Scalars['String']['output']>;
   /**
-   * A list of tax line objects, each of which details the total taxes applicable to the order.
+   * A list of tax lines.
    *
    */
   taxLines: Array<TaxLine>;
@@ -14746,14 +15103,18 @@ export type DraftOrderLineItem = Node & {
   /** The title of the product or variant. This field only applies to custom line items. */
   title: Scalars['String']['output'];
   /**
-   * The total value of the discount that's applied to the line item.
+   * The total discount applied in shop currency.
    *
+   * @deprecated Use `totalDiscountSet` instead.
    */
   totalDiscount: Scalars['Money']['output'];
-  /** The total value of the discount that's applied to the line item. */
+  /**
+   * The total discount amount.
+   *
+   */
   totalDiscountSet: MoneyBag;
   /**
-   * The associated variant for the line item.
+   * The product variant for the line item.
    *
    */
   variant?: Maybe<ProductVariant>;
@@ -14761,7 +15122,10 @@ export type DraftOrderLineItem = Node & {
   variantTitle?: Maybe<Scalars['String']['output']>;
   /** The name of the vendor who created the product variant. */
   vendor?: Maybe<Scalars['String']['output']>;
-  /** The weight unit and value for a draft order line item. */
+  /**
+   * The weight unit and value.
+   *
+   */
   weight?: Maybe<Weight>;
 };
 
@@ -14791,45 +15155,55 @@ export type DraftOrderLineItemEdge = {
   node: DraftOrderLineItem;
 };
 
-/** The input fields used to create a line item for a draft order. */
+/**
+ * The input fields for a line item included in a draft order.
+ *
+ */
 export type DraftOrderLineItemInput = {
   /**
-   * Discount which will be applied to the line item.
+   * The custom discount to be applied.
    *
    */
   appliedDiscount?: InputMaybe<DraftOrderAppliedDiscountInput>;
   /**
-   * Represents a generic custom attribute using a key value pair.
+   * A generic custom attribute using a key value pair.
    *
    */
   customAttributes?: InputMaybe<Array<AttributeInput>>;
-  /** The price without any discounts applied. This value is ignored when `variantId` is provided. */
-  originalUnitPrice?: InputMaybe<Scalars['Money']['input']>;
   /**
-   * The number of products that were purchased.
+   * The line item quantity.
    *
    */
   quantity: Scalars['Int']['input'];
   /**
-   * Whether physical shipping is required. This value is ignored when `variantId` is provided.
+   * Whether physical shipping is required for a custom line item. This field is ignored when `variantId` is provided..
    *
    */
   requiresShipping?: InputMaybe<Scalars['Boolean']['input']>;
-  /** The SKU number of the item. This value is ignored when `variantId` is provided. */
+  /**
+   * The SKU number for custom line items only. This field is ignored when `variantId` is provided..
+   *
+   */
   sku?: InputMaybe<Scalars['String']['input']>;
-  /** Whether the item is taxable. This value is ignored when `variantId` is provided. */
+  /**
+   * Whether the custom line item is taxable. This field is ignored when `variantId` is provided..
+   *
+   */
   taxable?: InputMaybe<Scalars['Boolean']['input']>;
-  /** Title of the item. Ignored when `variantId` is provided. */
+  /**
+   * Title of the line item. This field is ignored when `variantId` is provided..
+   *
+   */
   title?: InputMaybe<Scalars['String']['input']>;
   /**
    * The ID of the product variant corresponding to the line item.
-   * Null if custom line item. Required if product variant line item.
+   * Must be null for custom line items, otherwise required.
    *
    */
   variantId?: InputMaybe<Scalars['ID']['input']>;
   /**
-   * Specifies the weight unit and value inputs.
-   * This value is ignored when `variantId` is provided.
+   * The weight unit and value inputs for custom line items only.
+   * This field is ignored when `variantId` is provided..
    *
    */
   weight?: InputMaybe<WeightInput>;
@@ -23268,7 +23642,7 @@ export type MarketingActivityCreateExternalInput = {
   tactic: MarketingTactic;
   /** The title of the marketing activity. */
   title: Scalars['String']['input'];
-  /** Value for a query parameters that gets inserted into storefront URLs for matching storefront traffic to this activity. This feature is currently available on a limited basis to some partners only. UTMs should continue to be used for most partners. Either the URL parameter value or UTM can be set, but not both. */
+  /** Value for a query parameters that gets inserted into storefront URLs for matching storefront traffic to this activity. This feature is currently available on a limited basis to some partners only. UTMs should continue to be used for most partners. Both the URL parameter value and UTM parameters can be set. */
   urlParameterValue?: InputMaybe<Scalars['String']['input']>;
   /** Specifies the [Urchin Traffic Module (UTM) parameters](https://en.wikipedia.org/wiki/UTM_parameters) that are associated with a related marketing campaign. Either the URL parameter value or UTM can be set, but not both. */
   utm?: InputMaybe<UtmInput>;
@@ -23577,7 +23951,7 @@ export type MarketingActivityUpsertExternalInput = {
   tactic: MarketingTactic;
   /** The title of the marketing activity. */
   title: Scalars['String']['input'];
-  /** Value for a query parameters that gets inserted into storefront URLs for matching storefront traffic to this activity. This feature is currently available on a limited basis to some partners only. UTMs should continue to be used for most partners. Either the URL parameter value or UTM can be set, but not both. */
+  /** Value for a query parameters that gets inserted into storefront URLs for matching storefront traffic to this activity. This feature is currently available on a limited basis to some partners only. UTMs should continue to be used for most partners. Both the URL parameter value and UTM parameters can be set. */
   urlParameterValue?: InputMaybe<Scalars['String']['input']>;
   /** Specifies the [Urchin Traffic Module (UTM) parameters](https://en.wikipedia.org/wiki/UTM_parameters) that are associated with a related marketing campaign. Either the URL parameter value or UTM can be set, but not both. */
   utm?: InputMaybe<UtmInput>;
@@ -25178,7 +25552,7 @@ export enum MetafieldOwnerType {
   DeliveryCustomization = 'DELIVERY_CUSTOMIZATION',
   /** The Discount metafield owner type. */
   Discount = 'DISCOUNT',
-  /** The Draft Order metafield owner type. */
+  /** The draft order metafield owner type. */
   Draftorder = 'DRAFTORDER',
   /** The Fulfillment Constraint Rule metafield owner type. */
   FulfillmentConstraintRule = 'FULFILLMENT_CONSTRAINT_RULE',
@@ -26800,11 +27174,14 @@ export type Mutation = {
    *
    */
   draftOrderCalculate?: Maybe<DraftOrderCalculatePayload>;
-  /** Completes a draft order and creates an order. */
+  /**
+   * Completes a draft order and creates an order.
+   *
+   */
   draftOrderComplete?: Maybe<DraftOrderCompletePayload>;
   /** Creates a draft order. */
   draftOrderCreate?: Maybe<DraftOrderCreatePayload>;
-  /** Creates a Draft Order from Order. */
+  /** Creates a draft order from order. */
   draftOrderCreateFromOrder?: Maybe<DraftOrderCreateFromOrderPayload>;
   /** Creates a merchant checkout for the given draft order. */
   draftOrderCreateMerchantCheckout?: Maybe<DraftOrderCreateMerchantCheckoutPayload>;
@@ -28895,7 +29272,6 @@ export type MutationDraftOrderCalculateArgs = {
 export type MutationDraftOrderCompleteArgs = {
   id: Scalars['ID']['input'];
   paymentGatewayId?: InputMaybe<Scalars['ID']['input']>;
-  paymentPending?: InputMaybe<Scalars['Boolean']['input']>;
   sourceName?: InputMaybe<Scalars['String']['input']>;
 };
 
@@ -37622,7 +37998,7 @@ export type ProductVariant = HasMetafieldDefinitions & HasMetafields & HasPublis
    * @deprecated
    * The [relationship between a product variant and a fulfillment service was changed in the `2022-07` API version](/changelog/fulfillment-service-sku-sharing). A [ProductVariant](/api/admin-graphql/latest/objects/ProductVariant) can be stocked by multiple fulfillment services. As a result, we recommend that you use the [inventoryItem field](/api/admin-graphql/latest/objects/ProductVariant#field-productvariant-inventoryitem) if you need to determine where a product variant is stocked.
    *
-   * If you need to determine whether a product is a gift card, then you should continue to use this field until an alternative is available.
+   * If you need to determine whether a product is a gift card, then you should use `product.isGiftCard`.
    *
    * Learn more about [managing inventory quantities and states](/apps/fulfillment/inventory-management-apps/quantities-states).
    *
@@ -37637,7 +38013,7 @@ export type ProductVariant = HasMetafieldDefinitions & HasMetafields & HasPublis
   fulfillmentServiceEditable: EditableProperty;
   /**
    * The Harmonized System Code (or HS Tariff Code) for the variant.
-   * @deprecated Use `InventoryItem.harmonizedSystemCode` instead.
+   * @deprecated Use `inventoryItem.harmonizedSystemCode` instead.
    */
   harmonizedSystemCode?: Maybe<Scalars['String']['output']>;
   /** A globally-unique ID. */
@@ -37648,7 +38024,7 @@ export type ProductVariant = HasMetafieldDefinitions & HasMetafields & HasPublis
   inventoryItem: InventoryItem;
   /**
    * The fulfillment service that tracks the number of items in stock for the product variant.
-   * @deprecated Use tracked attribute on `inventoryItem` instead.
+   * @deprecated Use `inventoryItem.tracked` instead.
    */
   inventoryManagement: ProductVariantInventoryManagement;
   /** Whether customers are allowed to place an order for the product variant when it's out of stock. */
@@ -37705,7 +38081,7 @@ export type ProductVariant = HasMetafieldDefinitions & HasMetafields & HasPublis
   /**
    * Whether a customer needs to provide a shipping address when placing an order for the product variant.
    *
-   * @deprecated Use `InventoryItem.requiresShipping` instead.
+   * @deprecated Use `inventoryItem.requiresShipping` instead.
    */
   requiresShipping: Scalars['Boolean']['output'];
   /** List of product options applied to the variant. */
@@ -37755,13 +38131,13 @@ export type ProductVariant = HasMetafieldDefinitions & HasMetafields & HasPublis
   updatedAt: Scalars['DateTime']['output'];
   /**
    * The weight of the product variant in the unit system specified with weight_unit.
-   * @deprecated Use InventoryItem.measurement.weight instead
+   * @deprecated Use `inventoryItem.measurement.weight.value` instead
    */
   weight?: Maybe<Scalars['Float']['output']>;
   /**
    * The unit of measurement that applies to the product variant's weight. If you don't specify a value for weight_unit, then the shop's default unit of measurement is applied. Valid values: `g`, `kg`, `oz`, `lb`.
    *
-   * @deprecated Use InventoryItem.measurement.weight instead
+   * @deprecated Use `inventoryItem.measurement.weight.unit` instead
    */
   weightUnit: WeightUnit;
 };
@@ -38072,8 +38448,6 @@ export type ProductVariantInput = {
    *
    */
   requiresComponents?: InputMaybe<Scalars['Boolean']['input']>;
-  /** The SKU for the variant. Case-sensitive string. */
-  sku?: InputMaybe<Scalars['String']['input']>;
   /** The tax code associated with the variant. */
   taxCode?: InputMaybe<Scalars['String']['input']>;
   /** Whether the variant is taxable. */
@@ -38253,8 +38627,6 @@ export type ProductVariantSetInput = {
   barcode?: InputMaybe<Scalars['String']['input']>;
   /** The compare-at price of the variant. */
   compareAtPrice?: InputMaybe<Scalars['Money']['input']>;
-  /** The Harmonized System code (or HS Tariff code) for the variant. */
-  harmonizedSystemCode?: InputMaybe<Scalars['String']['input']>;
   /** Specifies the product variant to update or create a new variant if absent. */
   id?: InputMaybe<Scalars['ID']['input']>;
   /** Whether customers are allowed to place an order for the product variant when it's out of stock. */
@@ -38282,18 +38654,12 @@ export type ProductVariantSetInput = {
    *
    */
   requiresComponents?: InputMaybe<Scalars['Boolean']['input']>;
-  /** Whether the variant requires shipping. */
-  requiresShipping?: InputMaybe<Scalars['Boolean']['input']>;
   /** The SKU for the variant. Case-sensitive string. */
   sku?: InputMaybe<Scalars['String']['input']>;
   /** The tax code associated with the variant. */
   taxCode?: InputMaybe<Scalars['String']['input']>;
   /** Whether the variant is taxable. */
   taxable?: InputMaybe<Scalars['Boolean']['input']>;
-  /** The weight of the variant. */
-  weight?: InputMaybe<Scalars['Float']['input']>;
-  /** The unit of weight that's used to measure the variant. */
-  weightUnit?: InputMaybe<WeightUnit>;
 };
 
 /** The set of valid sort keys for the ProductVariant query. */
@@ -38467,8 +38833,6 @@ export type ProductVariantsBulkInput = {
   optionValues?: InputMaybe<Array<VariantOptionValueInput>>;
   /** The price of the variant. */
   price?: InputMaybe<Scalars['Money']['input']>;
-  /** The SKU for the variant. */
-  sku?: InputMaybe<Scalars['String']['input']>;
   /** The tax code associated with the variant. */
   taxCode?: InputMaybe<Scalars['String']['input']>;
   /** Whether the variant is taxable. */
@@ -45330,8 +45694,6 @@ export type ShippingLineEdge = {
  *
  */
 export type ShippingLineInput = {
-  /** Price of the shipping rate. */
-  price?: InputMaybe<Scalars['Money']['input']>;
   /** Price of the shipping rate with currency. If provided, `price` will be ignored. */
   priceWithCurrency?: InputMaybe<MoneyInput>;
   /** A unique identifier for the shipping rate. */
@@ -52754,30 +53116,3 @@ export enum WeightUnit {
   /** 1 pound equals 16 ounces. */
   Pounds = 'POUNDS'
 }
-
-/** Return type for `deliveryProfileCreate` mutation. */
-export type DeliveryProfileCreatePayload = {
-  __typename?: 'deliveryProfileCreatePayload';
-  /** The delivery profile that was created. */
-  profile?: Maybe<DeliveryProfile>;
-  /** The list of errors that occurred from executing the mutation. */
-  userErrors: Array<UserError>;
-};
-
-/** Return type for `deliveryProfileRemove` mutation. */
-export type DeliveryProfileRemovePayload = {
-  __typename?: 'deliveryProfileRemovePayload';
-  /** The delivery profile deletion job triggered by the mutation. */
-  job?: Maybe<Job>;
-  /** The list of errors that occurred from executing the mutation. */
-  userErrors: Array<UserError>;
-};
-
-/** Return type for `deliveryProfileUpdate` mutation. */
-export type DeliveryProfileUpdatePayload = {
-  __typename?: 'deliveryProfileUpdatePayload';
-  /** The delivery profile that was updated. */
-  profile?: Maybe<DeliveryProfile>;
-  /** The list of errors that occurred from executing the mutation. */
-  userErrors: Array<UserError>;
-};
