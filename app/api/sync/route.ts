@@ -1,4 +1,5 @@
 import { storefrontClient } from '@/clients/storeFrontClient'
+import { denormalizeId, normalizeId } from '@/lib/utils';
 import { platformProduct } from '@/db/schema'
 import { Root } from '@/ shopify-webhooks'
 import { createHmac } from 'crypto'
@@ -70,17 +71,6 @@ export async function POST(req: Request) {
   }
 
   return Response.json({ status: 'ok' })
-}
-
-
-// Normalize and denormalize Shopify IDs
-function normalizeId(id: string) {
-  const shopifyIdPrefix = 'gid://shopify/Product/'
-  return id.replace(shopifyIdPrefix, '')
-}
-
-function denormalizeId(id: string) {
-  return id.startsWith('gid://shopify/Product/') ? id : `gid://shopify/Product/${id}`
 }
 
 // Verify the webhook

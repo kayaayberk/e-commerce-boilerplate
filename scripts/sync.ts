@@ -96,6 +96,19 @@ async function migrate() {
     return
   }
 
+  const collectionWebhook = await client.subscribeWebhook('COLLECTIONS_UPDATE' as WebhookSubscriptionTopic, `${process.env.LIVE_HEADLESS_URL}/api/sync`)
+
+  console.log({status: 'SUCCESS', message: 'Successfully subscribed to COLLECTIONS_UPDATE webhook'})
+  const collectionWebhookServerError =
+    collectionWebhook?.errors?.graphQLErrors?.find(Boolean)?.message
+
+  if (collectionWebhookServerError) {
+    console.log({ status: 'FAIL', message: collectionWebhookServerError })
+    process.exit(0)
+
+    return
+  }
+
   console.log({ status: 'SUCCESS', message: 'Done' })
   process.exit(0)
 }
