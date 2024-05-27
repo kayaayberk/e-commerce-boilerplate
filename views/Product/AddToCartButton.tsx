@@ -61,9 +61,9 @@ export function AddToCartButton({
   return (
     <Button
       onClick={handleClick}
-      variant="secondary"
+      variant="default"
       size="lg"
-      className={cn("relative w-fit rounded-xl transition-transform hover:scale-105 hover:text-white", className)}
+      className={cn("relative w-fit rounded-lg transition-transform hover:scale-105 hover:text-white", className)}
       disabled={isPending || disabled}
     >
       Add to Cart

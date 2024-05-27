@@ -30,7 +30,7 @@ export function ProductDetails({ product, slug }: { product: PlatformProduct; sl
       {hasLoaded.current && (
         <>
           <AddToCartButton className="my-8" combination={combination} product={product} slug={slug} />
-          <ProductFaq className="mt-12 flex flex-col gap-5" />
+          <ProductFaq className="mt-12 flex flex-col gap-3" />
         </>
       )}
     </div>

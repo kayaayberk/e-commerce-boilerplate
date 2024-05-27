@@ -29,7 +29,7 @@ export function FavoriteMarker({ handle }: { handle: string }) {
   }
 
   return (
-    <div className='absolute left-6 top-4'>
+    <div className='absolute top-2'>
       <button
         aria-label='Favorite this item'
         type='submit'
@@ -38,13 +38,13 @@ export function FavoriteMarker({ handle }: { handle: string }) {
       >
         {!isPending ? (
           <Icons.Heart
-            className={cn('size-8 cursor-pointer transition-colors hover:fill-neutral-200', {
+            className={cn('size-6 cursor-pointer transition-colors hover:fill-neutral-200', {
               'fill-black': isActive,
             })}
           />
         ) : (
           <div className='relative items-center justify-center '>
-            <Icons.Spinner className='size-8 animate-spin bg-transparent' />
+            <Icons.Spinner className='size-6 animate-spin bg-transparent' />
           </div>
         )}
       </button>

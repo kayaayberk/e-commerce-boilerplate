@@ -5,13 +5,13 @@ import { cn } from '@/lib/utils'
 
 const ACCORDIONS = {
   'Product Details': (
-    <ul>
-      <li>* 20L capacity</li>
-      <li>* 700W output power</li>
-      <li>* 6 power levels</li>
-      <li>* 30 minuter timer</li>
-      <li>* Cooking end signal</li>
-    </ul>
+    <>
+      <li>20L capacity</li>
+      <li>700W output power</li>
+      <li>6 power levels</li>
+      <li>30 minuter timer</li>
+      <li>Cooking end signal</li>
+    </>
   ),
   'Size and Fit': (
     <p>
@@ -51,9 +51,9 @@ export function FaqSection({ className }: { className?: string }) {
   return (
     <Accordion type='multiple' className={cn('w-full', className)}>
       {Object.entries(ACCORDIONS).map(([title, content]) => (
-        <AccordionItem value={title} key={title}>
+        <AccordionItem value={title} key={title} className='border rounded-xl'>
           <AccordionTrigger className='px-5 py-3 text-base'>{title}</AccordionTrigger>
-          <AccordionContent>{content}</AccordionContent>
+          <AccordionContent className='px-5'>{content}</AccordionContent>
         </AccordionItem>
       ))}
     </Accordion>

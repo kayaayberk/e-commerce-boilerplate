@@ -1,5 +1,5 @@
 import { getProductRecommendations } from '@/app/actions/product.actions'
-import { Carousel, CarouselContent } from '@/components/ui/carousel'
+import { Carousel, CarouselContent, CarouselNext, CarouselPrevious } from '@/components/ui/carousel'
 import { ProductCard } from 'components/ProductCard/ProductCard'
 
 interface SimilarProductsSectionProps {
@@ -23,6 +23,8 @@ export async function SimilarProductsSection({ id }: SimilarProductsSectionProps
             />
           ))}
         </CarouselContent>
+        <CarouselNext />
+        <CarouselPrevious />
       </Carousel>
     </section>
   )

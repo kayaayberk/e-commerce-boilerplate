@@ -35,8 +35,8 @@ export default async function Product({ params: { slug } }: ProductProps) {
 }
 
 async function ProductView({ slug }: { slug: string }) {
-  const collections = await getCollections()
   const product = await getProduct(removeOptionsFromUrl(slug))
+  const collections = await getCollections()
 
   const { color, size } = getOptionsFromUrl(slug)
   const hasInvalidOptions =
@@ -65,7 +65,7 @@ async function ProductView({ slug }: { slug: string }) {
           <ImageCarousel images={product.images}>
             <FavoriteMarker handle={product.handle} />
           </ImageCarousel>
-          <div className='flex flex-col items-start'>
+          <div className='flex flex-col items-start pt-12'>
             <ProductInformation
               className='pb-6'
               title={product.title}

@@ -46,29 +46,28 @@ function ImageCarousel({ className, images, children }: ImageCarouselnProps) {
   const hasOnlyOneImage = images.length <= 1
 
   return (
-    <div className={cn('relative flex max-w-full flex-col gap-10 md:max-w-[480px]', className)}>
-      <Carousel setApi={setApi} className='relative min-h-[600px] flex items-center w-full '>
-        <CarouselContent className='size-full'>
+    <div className={cn('relative flex max-w-full flex-col gap-16', className)}>
+      <Carousel setApi={setApi} className='relative flex items-center justify-center w-full pt-12'>
+        <CarouselContent className='m-0 rounded-xl'>
           {images.map((image, index) => (
             <CarouselItem
-              className='flex size-full h-[400px] flex-col items-center justify-center'
+              className='flex size-full max-h-[400px] items-center justify-center rounded-xl overflow-hidden p-0'
               key={image.url}
             >
               <Image
                 alt={image.altText || ''}
-                src={image.url || '/default-product-image.svg'}
+                src={image.url}
                 width={480}
-                height={600}
+                height={400}
                 priority={index === 0}
-                className='mx-auto object-contain px-4'
-                sizes='(max-width: 450px) 300px, 480px'
+                className='mx-auto object-contain'
               />
             </CarouselItem>
           ))}
         </CarouselContent>
-        <div className='absolute bottom-0 left-1/2 flex -translate-x-1/2 gap-0 pb-6'>
-          {hasOnlyOneImage ? null : <CarouselPrevious className='relative' />}
-          {hasOnlyOneImage ? null : <CarouselNext className='relative' />}
+        <div className='absolute bottom-0 left-1/2 flex -translate-x-1/2 gap-0 translate-y-8'>
+          {hasOnlyOneImage ? null : <CarouselPrevious />}
+          {hasOnlyOneImage ? null : <CarouselNext />}
         </div>
       </Carousel>
 
@@ -79,7 +78,7 @@ function ImageCarousel({ className, images, children }: ImageCarouselnProps) {
               key={'thumbnail_' + image.url}
               onClick={() => onThumbClick(index)}
               className={cn(
-                'flex size-24 shrink-0 items-center overflow-hidden  justify-center border border-white bg-neutral-100',
+                'flex size-24 shrink-0 items-center overflow-hidden rounded-xl justify-center border border-white bg-neutral-100',
                 { 'border-black': index === current - 1 }
               )}
             >
@@ -89,6 +88,7 @@ function ImageCarousel({ className, images, children }: ImageCarouselnProps) {
                 width={100}
                 height={100}
                 sizes='100px'
+                className='object-contain'
               />
             </div>
           ))}

@@ -1,4 +1,4 @@
-import { storefrontClient } from '@/clients/storeFrontClient'
+import { getCollections, getSingleCollection } from '@/app/actions/collection.actions'
 import { SearchView } from '../Search/SearchView'
 import { SearchParamsType } from '@/types'
 import { notFound } from 'next/navigation'
@@ -10,8 +10,8 @@ interface CategoryViewProps {
 }
 
 export async function CategoryView({ params, searchParams = {} }: CategoryViewProps) {
-  const collection = await storefrontClient.getCollection(params.slug)
-
+  const collection = await getSingleCollection(params.slug)
+  const collections = await getCollections()
 
   if (!collection) return notFound()
 
@@ -19,7 +19,7 @@ export async function CategoryView({ params, searchParams = {} }: CategoryViewPr
     <SearchView
       searchParams={searchParams}
       params={params}
-      disabledFacets={['category', 'tags']}
+      disabledFacets={['tags', 'category']}
       collection={collection}
       intro={
         <HeroSection
@@ -27,6 +27,7 @@ export async function CategoryView({ params, searchParams = {} }: CategoryViewPr
           title={collection.title}
           description={collection.description}
           image={collection.image}
+          collections={collections}
         />
       }
     />
