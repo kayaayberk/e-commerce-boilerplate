@@ -54,8 +54,6 @@ export function FacetsContent({ facetDistribution, className, disabledFacets }: 
     setMaxPrice(null)
   }
 
-  // console.log('facetDistribution: ', facetDistribution)
-
   return (
     <div className={className}>
     <Suspense>
@@ -78,7 +76,7 @@ export function FacetsContent({ facetDistribution, className, disabledFacets }: 
       </div>
     </div>
 
-    <Accordion collapsible className="w-full" type="single" defaultValue={lastSelected}>
+    <Accordion collapsible className="w-full space-y-1" type="single" defaultValue={lastSelected}>
       {!disabledFacets?.includes("tags") ? (
         <Facet
           id="tags"
@@ -135,8 +133,8 @@ export function FacetsContent({ facetDistribution, className, disabledFacets }: 
         />
       ) : null}
 
-      <AccordionItem value="price">
-        <AccordionTrigger className="text-base">Price Range</AccordionTrigger>
+      <AccordionItem value="price" className='border rounded-xl px-2'>
+        <AccordionTrigger className="text-sm">Price Range</AccordionTrigger>
         <AccordionContent>
           <PriceFacet
             initMin={minPrice}

@@ -33,36 +33,10 @@ export const searchParamsCache = createSearchParamsCache({
   sizes: parseAsArrayOf(parseAsString).withDefault([]),
 })
 
-
-// function parseQuery(query: string) {
-//   const parts = query.split('AND');
-//   const conditions = parts.map(part => {
-//     const [key, operator, value] = part.split(' ');
-//     return { key, operator, value };
-//   });
-//   return conditions;
-// }
-
-// function executeQuery(conditions, drizzle) {
-//   let query = drizzle.select('*').from('items');
-
-//   conditions.forEach(condition => {
-//     if (condition.operator === '=') {
-//       query = query.where(condition.key, '=', condition.value);
-//     } else if (condition.operator === '>=') {
-//       query = query.where(condition.key, '>=', condition.value);
-//     } else if (condition.operator === 'IN') {
-//       const values = condition.value.slice(1, -1).split(',');
-//       query = query.whereIn(condition.key, values);
-//     }
-//   });
-
-//   return query.get();
-// }
-
 // prettier-ignore
 export async function SearchView({ searchParams, disabledFacets, intro, collection }: SearchViewProps) {
   const { q, sortBy, page, ...rest } = searchParamsCache.parse(searchParams)
+  console.log(page)
 
   const filterBuilder = new FilterBuilder()
 
@@ -71,6 +45,7 @@ export async function SearchView({ searchParams, disabledFacets, intro, collecti
   }
 
   const { facetDistribution, hits, totalPages } = await searchProducts( q, sortBy, page, composeFilters(filterBuilder, rest).build() )
+  console.log(hits.length, totalPages)
 
   return (
     <div className='mx-auto w-full max-w-container-md px-4 py-12 md:py-24 xl:px-0'>

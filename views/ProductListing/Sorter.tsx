@@ -41,7 +41,7 @@ export function Sorter({ className }: SorterProps) {
       <DropdownMenu>
         <DropdownMenuTrigger aria-expanded={undefined} asChild>
           <div className='flex cursor-pointer items-center justify-center gap-0.5 whitespace-nowrap text-[15px] text-black'>
-            Sort by: <span className='ml-0.5 text-slate-700'>{LABELS[sortBy]}</span>
+            Sort by: <span className='text-black'>{LABELS[sortBy]}</span>
             <Icons.ChevronDown className='size-4' />
           </div>
         </DropdownMenuTrigger>

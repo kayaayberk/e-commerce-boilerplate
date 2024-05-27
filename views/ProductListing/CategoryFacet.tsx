@@ -1,3 +1,4 @@
+import { Button } from '@/components/ui/button'
 import { cn } from '@/lib/utils'
 
 interface CategoryFacetProps {
@@ -20,7 +21,7 @@ export function CategoryFacet({ distribution, isChecked, onCheckedChange }: Cate
       {hasNoResults ? null : (
         <div className='grid gap-[24px]'>
           {distributionsEntries.map(([value], index) => (
-            <button
+            <Button
               key={index + value}
               className={cn(
                 'flex items-center gap-2 bg-transparent text-[18px]/[18px] font-normal',
@@ -29,7 +30,7 @@ export function CategoryFacet({ distribution, isChecked, onCheckedChange }: Cate
               onClick={() => handleClick(value)}
             >
               {value}
-            </button>
+            </Button>
           ))}
         </div>
       )}

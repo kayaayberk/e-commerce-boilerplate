@@ -31,7 +31,7 @@ export function SearchFacet({ className }: { className?: string }) {
   return (
     <div className={cn('relative flex w-full', className)}>
       <Input
-        className='relative w-full appearance-none rounded-md border border-neutral-300 bg-neutral-100 pl-4 text-black focus:border-blue-500 focus:ring-blue-500'
+        className='relative w-full appearance-none rounded-md border border-neutral-300 pl-4 text-black'
         placeholder='Search...'
         type='text'
         value={localQuery || ''}

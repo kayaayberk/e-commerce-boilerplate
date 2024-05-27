@@ -15,8 +15,8 @@ export function Facet({ id, title, distribution, isChecked, onCheckedChange }: F
   const hasNoResults = distributionsEntries.length === 0
 
   return (
-    <AccordionItem value={id}>
-      <AccordionTrigger>{title}</AccordionTrigger>
+    <AccordionItem value={id} className='border rounded-xl px-2'>
+      <AccordionTrigger className='text-sm'>{title}</AccordionTrigger>
       <AccordionContent>
         {hasNoResults ? (
           <p className='text-[14px] text-neutral-500'>No {title?.toLowerCase()} found</p>
