@@ -15,10 +15,6 @@ export function CallToAction() {
           <div className='w-full'>
             <form className='flex flex-col gap-4'>
               <Label>
-                <span className='sr-only'>Name</span>
-                <Input placeholder='Name' />
-              </Label>
-              <Label>
                 <span className='sr-only'>Email</span>
                 <Input placeholder='Email' type='email' />
               </Label>
