@@ -16,7 +16,7 @@ export function AuthActions() {
         // isAnimated={false}
         onClick={() => openModal('signup')}
       >
-        Sign In
+        Sign Up
       </Button>
     </div>
   )

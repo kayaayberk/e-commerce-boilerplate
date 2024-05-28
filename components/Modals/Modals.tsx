@@ -8,6 +8,7 @@ import React from "react"
 const LoginModal = dynamic(() => import("./LoginModal").then((m) => m.LoginModal), { loading: Placeholder })
 const SignupModal = dynamic(() => import("./SignupModal").then((m) => m.SignupModal), { loading: Placeholder })
 const SearchModal = dynamic(() => import("./SearchModal").then((m) => m.SearchModal), { loading: Placeholder })
+const DeleteAccountModal = dynamic(() => import("./DeleteAccountModal").then((m) => m.DeleteAccountModal), { loading: Placeholder })
 
 export function Modals() {
   const modals = useModalStore((s) => s.modals)
@@ -29,6 +30,8 @@ function ModalsFactory({ type }: { type: Modal }) {
       return <SignupModal />
     case "search":
       return <SearchModal />
+    case "delete-account":
+      return <DeleteAccountModal />
     default:
       return null
   }
