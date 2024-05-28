@@ -1,8 +1,10 @@
-import { Toaster } from '@/components/ui/toaster'
+import { Modals } from '@/components/Modals/Modals'
+import { TopBar } from '@/components/TopBar/TopBar'
+import { Footer } from '@/components/Footer/Footer'
+import { Toaster } from '@/components/ui/sonner'
 import type { Metadata, Viewport } from 'next'
 import { Inter } from 'next/font/google'
 import './globals.css'
-
 
 export const viewport: Viewport = {
   width: 'device-width',
@@ -24,11 +26,17 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang='en' suppressHydrationWarning>
+    <html lang='en' className={inter.className} suppressHydrationWarning>
       <body>
+        <TopBar />
+
         {/* <NavigationBar /> */}
-        {/* <Modals /> */}
+
         {children}
+
+        <Footer />
+        <Modals />
+
         <Toaster />
       </body>
     </html>
