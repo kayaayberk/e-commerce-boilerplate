@@ -8,14 +8,23 @@ import { Button } from '../ui/button'
 import { useUserStore } from '@/lib/stores/userStore'
 import { Checkbox } from '../ui/checkbox'
 import { CheckedState } from '@radix-ui/react-checkbox'
-import { useToast } from '../ui/use-toast'
+import { toast } from 'sonner'
+import { GenericModal } from '../GenericModal/GenericModal'
+import { useModalStore } from '@/lib/stores/modalStore'
 
 const passwordRegexp = new RegExp(/(?=.*\d)(?=.*\W)(?=.*[a-z])(?=.*[A-Z]).{8,20}$/)
 const phoneRegexp = new RegExp(/^\+(?:[0-9]?){6,14}[0-9]$/)
 
 const formSchema = z.object({
   email: z.string().email().min(3).max(64),
-  password: z.string().min(8).max(20).regex(passwordRegexp, 'Password must have at least one number, one symbol, one uppercase letter, and be at least 8 characters'),
+  password: z
+    .string()
+    .min(8)
+    .max(20)
+    .regex(
+      passwordRegexp,
+      'Password must have at least one number, one symbol, one uppercase letter, and be at least 8 characters'
+    ),
   firstName: z.string().min(1).max(64),
   lastName: z.string().min(1).max(64),
   phone: z.string().regex(phoneRegexp, 'Number must match E164 format'),
@@ -31,9 +40,10 @@ const formFields = [
 ] as const
 // const checkboxFields = [{ label: 'Accept Marketing', name: 'acceptsMarketing', type: 'checkbox', placeholder: 'Accept marketing...' }] as const
 
-function SignupModal() {
+export function SignupModal() {
+  const modals = useModalStore((s) => s.modals)
   const setUser = useUserStore((s) => s.setUser)
-  const { toast } = useToast()
+  const closeModal = useModalStore((s) => s.closeModal)
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -50,46 +60,53 @@ function SignupModal() {
   async function onSubmit(payload: z.infer<typeof formSchema>) {
     const { email, password, firstName, lastName, phone } = payload
     const user = await signupUser({ email, password, firstName, lastName, phone })
-    console.log(user)
     if (user) {
       const currentUser = await getCurrentUser()
       currentUser && setUser(currentUser)
 
-      toast({
-        title: 'Account created.',
-        description: "You've successfully created an account.",
-        variant: 'default',
-      })
+      closeModal('signup')
+      toast.success('You have successfully signed up! You can now log in.')
       return
     }
 
-    toast({
-      title: 'Problem creating account.',
-      description: 'There was a problem creating your account. Please try again.',
-      variant: 'destructive',
-    })
+    toast.error("Couldn't create user. The email address may be already in use.")
   }
 
   return (
-    <Form {...form}>
-      <form name='loginForm' id='loginForm' onSubmit={form.handleSubmit(onSubmit)} className='space-y-1'>
-        {formFields.map((singleField) => (
-          <FormField
-            key={singleField.name}
-            control={form.control}
-            name={singleField.name}
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>{singleField.label}</FormLabel>
-                <FormControl>
-                  <Input type={singleField.type} className='text-sm' placeholder={singleField.placeholder} {...field} />
-                </FormControl>
-                <FormMessage className='text-xs font-normal text-red-400' />
-              </FormItem>
-            )}
-          />
-        ))}
-        {/* {checkboxFields.map((singleField) => (
+    <GenericModal
+      title='Signup'
+      open={!!modals['signup']}
+      onOpenChange={() => closeModal('signup')}
+    >
+      <Form {...form}>
+        <form
+          name='loginForm'
+          id='loginForm'
+          onSubmit={form.handleSubmit(onSubmit)}
+          className='space-y-1'
+        >
+          {formFields.map((singleField) => (
+            <FormField
+              key={singleField.name}
+              control={form.control}
+              name={singleField.name}
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>{singleField.label}</FormLabel>
+                  <FormControl>
+                    <Input
+                      type={singleField.type}
+                      className='text-sm'
+                      placeholder={singleField.placeholder}
+                      {...field}
+                    />
+                  </FormControl>
+                  <FormMessage className='text-xs font-normal text-red-400' />
+                </FormItem>
+              )}
+            />
+          ))}
+          {/* {checkboxFields.map((singleField) => (
           <FormField
             key={singleField.name}
             control={form.control}
@@ -105,12 +122,18 @@ function SignupModal() {
             )}
           />
         ))} */}
-        <Button size='lg' form='loginForm' className='hover:text-white' variant='secondary' type='submit' disabled={form.formState.isSubmitting}>
-          Submit
-        </Button>
-      </form>
-    </Form>
+          <Button
+            size='lg'
+            form='loginForm'
+            className='hover:text-white'
+            variant='secondary'
+            type='submit'
+            disabled={form.formState.isSubmitting}
+          >
+            Submit
+          </Button>
+        </form>
+      </Form>
+    </GenericModal>
   )
 }
-
-export default SignupModal
