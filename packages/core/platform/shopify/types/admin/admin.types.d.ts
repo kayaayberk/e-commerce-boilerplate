@@ -6219,7 +6219,7 @@ export type CompanyAddress = Node & {
   /** The zip or postal code of the address. */
   zip?: Maybe<Scalars['String']['output']>;
   /**
-   * The two-letter code for the region.
+   * The alphanumeric code for the region.
    * For example, ON.
    *
    */
@@ -6262,7 +6262,7 @@ export type CompanyAddressInput = {
   recipient?: InputMaybe<Scalars['String']['input']>;
   /** The zip or postal code of the address. */
   zip?: InputMaybe<Scalars['String']['input']>;
-  /** The two-letter code ([ISO 3166-2 alpha-2]](https://en.wikipedia.org/wiki/ISO_3166-2) format) for the region of the address, such as the province, state, or district. For example, `ON` for Ontario, Canada. */
+  /** The alphanumeric code for the region of the address, such as the province, state, or district. For example, `ON` for Ontario, Canada. */
   zoneCode?: InputMaybe<Scalars['String']['input']>;
 };
 
@@ -8678,7 +8678,7 @@ export type CustomerCreditCardBillingAddress = {
   /** The region of the address, such as the province, state, or district. */
   province?: Maybe<Scalars['String']['output']>;
   /**
-   * The two-letter code for the region.
+   * The alphanumeric code for the region.
    * For example, ON.
    *
    */
@@ -9423,7 +9423,7 @@ export type CustomerPaymentInstrumentBillingAddress = {
   /** The region of the address, such as the province, state, or district. */
   province?: Maybe<Scalars['String']['output']>;
   /**
-   * The two-letter code for the region.
+   * The alphanumeric code for the region.
    * For example, ON.
    *
    */
@@ -22456,7 +22456,7 @@ export type MailingAddress = Node & {
   /** The region of the address, such as the province, state, or district. */
   province?: Maybe<Scalars['String']['output']>;
   /**
-   * The two-letter code for the region.
+   * The alphanumeric code for the region.
    *
    * For example, ON.
    *
@@ -46705,7 +46705,7 @@ export type ShopAddress = Node & {
   /** The region of the address, such as the province, state, or district. */
   province?: Maybe<Scalars['String']['output']>;
   /**
-   * The two-letter code for the region.
+   * The alphanumeric code for the region.
    *
    * For example, ON.
    *
@@ -50579,7 +50579,7 @@ export type SubscriptionMailingAddress = {
   /** The region of the address, such as the province, state, or district. */
   province?: Maybe<Scalars['String']['output']>;
   /**
-   * The two-letter code for the region.
+   * The alphanumeric code for the region.
    *
    * For example, ON.
    *

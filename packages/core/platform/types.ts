@@ -151,7 +151,7 @@ export interface PlatformUser {
 }
 
 export interface PlatformUserCreateInput
-  extends Pick<PlatformUser, 'email' | 'firstName' | 'lastName' | 'phone'> {
+  extends Pick<PlatformUser, 'email' | 'firstName' | 'lastName' | 'phone' | 'acceptsMarketing'> {
   password: string
 }
 

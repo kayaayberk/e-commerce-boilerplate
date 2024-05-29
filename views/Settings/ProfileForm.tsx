@@ -1,30 +1,20 @@
 'use client'
 
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from '@/components/ui/form'
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form'
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card'
 import { getCurrentUser, updateUser } from 'app/actions/user.actions'
 import { PlatformUser } from '@/packages/core/platform/types'
-import { CheckedState } from '@radix-ui/react-checkbox'
 import { useUserStore } from '@/lib/stores/userStore'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { Checkbox } from '@/components/ui/checkbox'
 import { Icons } from '@/components/Icons/Icons'
 import { Button } from '@/components/ui/button'
+import { Switch } from '@/components/ui/switch'
 import { Input } from '@/components/ui/input'
 import { useForm } from 'react-hook-form'
 import { cn } from '@/lib/utils'
 import { toast } from 'sonner'
-import { z } from 'zod'
-import { Switch } from '@/components/ui/switch'
-import { Label } from '@/components/ui/label'
 import React from 'react'
+import { z } from 'zod'
 
 const formSchema = z.object({
   firstName: z.string().max(64).optional(),
@@ -68,7 +58,6 @@ export function ProfileForm({ user }: { user: PlatformUser }) {
   })
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log('values', values)
     const hasAnyFilledIn = Object.values(values).find(Boolean)
     if (!hasAnyFilledIn) return
 

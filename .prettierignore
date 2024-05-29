@@ -4,3 +4,4 @@
 /components/ui/*.ts
 /scripts/sync.ts
 /app/actions/*.ts
+/lib

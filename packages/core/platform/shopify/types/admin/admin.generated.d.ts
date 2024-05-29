@@ -3,6 +3,16 @@
 /* eslint-disable */
 import * as AdminTypes from './admin.types.d.ts';
 
+export type CustomerDeleteMutationVariables = AdminTypes.Exact<{
+  id: AdminTypes.Scalars['ID']['input'];
+}>;
+
+
+export type CustomerDeleteMutation = { customerDelete?: AdminTypes.Maybe<(
+    Pick<AdminTypes.CustomerDeletePayload, 'deletedCustomerId'>
+    & { shop: Pick<AdminTypes.Shop, 'id'>, userErrors: Array<Pick<AdminTypes.UserError, 'field' | 'message'>> }
+  )> };
+
 export type ProductFeedCreateMutationVariables = AdminTypes.Exact<{ [key: string]: never; }>;
 
 
@@ -58,6 +68,7 @@ interface GeneratedQueryTypes {
 }
 
 interface GeneratedMutationTypes {
+  "#graphql\n  mutation customerDelete($id: ID!) {\n    customerDelete(input: {id: $id}) {\n        shop {\n        id\n        }\n        userErrors {\n        field\n        message\n        }\n        deletedCustomerId\n    }\n}\n": {return: CustomerDeleteMutation, variables: CustomerDeleteMutationVariables},
   "#graphql\n  mutation ProductFeedCreate {\n    productFeedCreate {\n      productFeed {\n        status\n        id\n      }\n      userErrors {\n        field\n        message\n      }\n    }\n  }\n": {return: ProductFeedCreateMutation, variables: ProductFeedCreateMutationVariables},
   "#graphql\n  mutation productFullSync($id: ID!) {\n    productFullSync(id: $id) {\n      userErrors {\n        field\n        message\n      }\n    }\n  }\n": {return: ProductFullSyncMutation, variables: ProductFullSyncMutationVariables},
   "#graphql\n  mutation webhookSubscriptionCreate($topic: WebhookSubscriptionTopic!, $webhookSubscription: WebhookSubscriptionInput!) {\n    webhookSubscriptionCreate(topic: $topic, webhookSubscription: $webhookSubscription) {\n      userErrors {\n        field\n        message\n      }\n      webhookSubscription {\n        id\n      }\n    }\n  }\n": {return: WebhookSubscriptionCreateMutation, variables: WebhookSubscriptionCreateMutationVariables},

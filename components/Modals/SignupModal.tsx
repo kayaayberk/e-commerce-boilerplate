@@ -4,16 +4,15 @@ import { GenericModal } from '../GenericModal/GenericModal'
 import { useModalStore } from '@/lib/stores/modalStore'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useUserStore } from '@/lib/stores/userStore'
+import { DialogFooter } from '../ui/dialog'
 import { useForm } from 'react-hook-form'
+import { Icons } from '../Icons/Icons'
 import { Switch } from '../ui/switch'
 import { Button } from '../ui/button'
 import { Input } from '../ui/input'
 import { cn } from '@/lib/utils'
 import { toast } from 'sonner'
 import { z } from 'zod'
-import { Dialog } from '@radix-ui/react-dialog'
-import { DialogFooter } from '../ui/dialog'
-import { Icons } from '../Icons/Icons'
 
 const passwordRegexp = new RegExp(/(?=.*\d)(?=.*\W)(?=.*[a-z])(?=.*[A-Z]).{8,20}$/)
 const phoneRegexp = new RegExp(/^\+(?:[0-9]?){6,14}[0-9]$/)
@@ -67,9 +66,9 @@ export function SignupModal() {
 
   async function onSubmit(payload: z.infer<typeof formSchema>) {
     const { email, password, firstName, lastName, phone, acceptsMarketing } = payload
-    console.log('Payload', payload)
+
     const user = await signupUser({ email, password, firstName, lastName, phone, acceptsMarketing })
-    console.log('User', user)
+
     if (user) {
       const currentUser = await getCurrentUser()
       currentUser && setUser(currentUser)

@@ -7,27 +7,28 @@ import type {
   ProductFullSyncMutation,
   SingleAdminProductQuery,
   ProductStatusQuery,
+  CustomerDeleteMutation,
 } from './types/admin/admin.generated'
-import type {
-  CreateAccessTokenMutation,
-  DeleteCartItemsMutation,
-  UpdateCartItemsMutation,
-  CreateCustomerMutation,
-  CreateCartItemMutation,
-  UpdateCustomerMutation,
-  ProductsByHandleQuery,
-  SingleCollectionQuery,
-  SingleCustomerQuery,
-  CreateCartMutation,
-  SingleProductQuery,
-  CollectionsQuery,
-  SingleCartQuery,
-  SinglePageQuery,
-  PagesQuery,
-  MenuQuery,
-  SearchProductsQuery,
-  PredictiveSearchQuery,
-  ProductRecommendationsQuery,
+import {
+  type CreateAccessTokenMutation,
+  type DeleteCartItemsMutation,
+  type UpdateCartItemsMutation,
+  type CreateCustomerMutation,
+  type CreateCartItemMutation,
+  type UpdateCustomerMutation,
+  type ProductsByHandleQuery,
+  type SingleCollectionQuery,
+  type SingleCustomerQuery,
+  type CreateCartMutation,
+  type SingleProductQuery,
+  type CollectionsQuery,
+  type SingleCartQuery,
+  type SinglePageQuery,
+  type PagesQuery,
+  type MenuQuery,
+  type SearchProductsQuery,
+  type PredictiveSearchQuery,
+  type ProductRecommendationsQuery,
 } from './types/storefront.generated'
 import {
   PlatformUserCreateInput,
@@ -66,6 +67,7 @@ import { AdminApiClient, createAdminApiClient } from '@shopify/admin-api-client'
 // NORMALIZERS
 import { normalizeCart, normalizeCollection, normalizeProduct } from './normalize'
 import { denormalizeId } from '@/lib/utils'
+import { customerDeleteMutation } from './mutations/customer.admin'
 
 
 interface CreateShopifyClientProps {
@@ -95,6 +97,7 @@ export function createShopifyClient({ storefrontAccessToken, adminAccessToken, s
     createUserAccessToken: async (input: Pick<PlatformUserCreateInput, "password" | "email">) => createUserAccessToken(client!, input),
     createUser: async (input: PlatformUserCreateInput) => createUser(client!, input),
     getUser: async (accessToken: string) => getUser(client!, accessToken),
+    deleteUser: async (id: string) => deleteUser(adminClient!, id),
 
     createCartItem: async (cartId: string, items: PlatformItemInput[]) => createCartItem(client!,cartId, items),
     updateCartItem: async (cartId: string, items: PlatformItemInput[]) => updateCartItem(client!,cartId, items),
@@ -258,7 +261,7 @@ async function getCollection(client: StorefrontApiClient, handle: string): Promi
   return normalizeCollection(collection.data?.collection)
 }
 
-async function createUser(client: StorefrontApiClient, input: PlatformUserCreateInput): Promise<Pick<PlatformUser, 'id'> | undefined | null> {
+async function createUser(client: StorefrontApiClient, input: PlatformUserCreateInput): Promise<Pick<PlatformUser, 'id' | 'acceptsMarketing' | 'displayName' | 'email' | 'firstName' | 'lastName' | 'phone' | 'tags'> | undefined | null> {
   const user = await client.request<CreateCustomerMutation>(createCustomerMutation, { variables: { input } })
 
   return user.data?.customerCreate?.customer
@@ -280,6 +283,12 @@ async function updateUser(client: StorefrontApiClient, customerAccessToken: stri
   const user = await client.request<UpdateCustomerMutation>(updateCustomerMutation, { variables: { customer: input, customerAccessToken } })
 
   return user.data?.customerUpdate?.customer
+}
+
+async function deleteUser(client: AdminApiClient, id: string) {
+  const user = await client.request<CustomerDeleteMutation>(customerDeleteMutation, { variables: { id } })
+
+  return user.data?.customerDelete?.deletedCustomerId
 }
 
 async function getAdminProduct(client: AdminApiClient, id: string) {

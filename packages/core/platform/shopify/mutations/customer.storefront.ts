@@ -8,6 +8,15 @@ export const createCustomerMutation = `#graphql
       }
       customer {
         id
+        firstName
+        lastName
+        email
+        phone
+        acceptsMarketing
+        displayName
+        tags
+        createdAt
+        updatedAt
       }
     }
   }
