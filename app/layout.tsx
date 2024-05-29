@@ -5,6 +5,7 @@ import { Toaster } from '@/components/ui/sonner'
 import type { Metadata, Viewport } from 'next'
 import { Inter } from 'next/font/google'
 import './globals.css'
+import { NavigationBar } from '@/components/NavigationBar/NavigationBar'
 
 export const viewport: Viewport = {
   width: 'device-width',
@@ -30,7 +31,7 @@ export default function RootLayout({
       <body>
         <TopBar />
 
-        {/* <NavigationBar /> */}
+        <NavigationBar />
 
         {children}
 
