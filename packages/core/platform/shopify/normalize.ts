@@ -15,7 +15,7 @@ export function normalizeProduct(product: SingleProductQuery['product']): Platfo
     vendor,
     priceRange,
     tags,
-    featuredImage,
+    featuredImage: featuredImage || images?.edges?.[0]?.node || null,
     seo,
     updatedAt,
     createdAt,

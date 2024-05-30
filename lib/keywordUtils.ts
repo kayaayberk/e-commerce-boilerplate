@@ -59,13 +59,15 @@ const STOP_WORDS = [
   'now',
 ]
 
+type Frequency = { [key: string]: number }
+
 export function makeKeywords(content: string | null | undefined) {
   if (!content) return []
 
   let words = content.toLowerCase().match(/\b(\w+)\b/g) as string[]
   words = words.filter((word) => !STOP_WORDS.includes(word))
 
-  const frequency = {}
+  const frequency: Frequency = {}
   words.forEach((word) => {
     if (!frequency[word]) {
       frequency[word] = 0
