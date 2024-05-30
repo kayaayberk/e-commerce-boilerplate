@@ -6,6 +6,12 @@ import type { Metadata, Viewport } from 'next'
 import { Inter } from 'next/font/google'
 import './globals.css'
 import { NavigationBar } from '@/components/NavigationBar/NavigationBar'
+import { Favorites } from '@/components/NavigationBar/Favorites'
+import { Suspense } from 'react'
+import { Cart } from '@/components/NavigationBar/Cart'
+import NavigationItems from '@/components/NavigationBar/NavigationItems'
+import Script from 'next/script'
+import { mobileInlineScript } from '@/components/NavigationBar/MobileInlineScript'
 
 export const viewport: Viewport = {
   width: 'device-width',
@@ -29,9 +35,11 @@ export default function RootLayout({
   return (
     <html lang='en' className={inter.className} suppressHydrationWarning>
       <body>
+        <Script id='mobileMegaMenuLogic' strategy='lazyOnload'>{`${mobileInlineScript}`}</Script>
+
         <TopBar />
 
-        <NavigationBar />
+        <NavigationItems />
 
         {children}
 

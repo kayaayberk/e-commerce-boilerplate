@@ -19,7 +19,10 @@ export async function CategoryView({ params, searchParams = {} }: CategoryViewPr
     <SearchView
       searchParams={searchParams}
       params={params}
-      disabledFacets={['tags', 'category']}
+      disabledFacets={[
+        // 'tags',
+        'category' 
+      ]}
       collection={collection}
       intro={
         <HeroSection
