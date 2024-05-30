@@ -2,15 +2,21 @@
 
 import { convertToFacetStructure } from '@/lib/structureConverterUtils'
 import { SelectplatformProduct, platformProduct } from '@/db/schema'
+import { and, asc, desc, eq, exists, lte, sql } from 'drizzle-orm'
+import { PlatformProduct } from '@/packages/core/platform/types'
 import { storefrontClient } from '@/clients/storeFrontClient'
 import { parseFilter } from '@/lib/filterParserUtils'
-import { asc, desc, eq, lte } from 'drizzle-orm'
 import { unstable_cache } from 'next/cache'
 import { db } from '@/db'
-import { PlatformProduct } from '@/packages/core/platform/types'
 
 export const searchProducts = unstable_cache(
   async (query: string, sortBy: string, page: number, filter: string) => {
+     /*
+     * All this logic is normally handled by search engines like Meilisearch, Agolia etc. However for the sake of
+     * keeping everything about this project free, we are doing this manually with manual sorting and DB queries.
+     * Even though engines like Meilisearch provide open source instances, there still is a cost associated with
+     * running them on platforms like Railway etc.
+     */
 
     // Parse string filter designed for Meilisearch into an object to be used in Drizzle select
     const filteredProducts = parseFilter(filter)
@@ -63,28 +69,50 @@ export const searchProducts = unstable_cache(
     // Convert facets to a structure that can be used in the frontend
     const convertedFacet = convertToFacetStructure(facets) || {}
 
+
     // Return conditions
-    const allHits = !isEmptyFacet ? filterByFacets || [] : filterByCollection || []
-    const hits = allHits.slice((page - 1) * 9, page * 9) as PlatformProduct[]
-    const totalPages = !isEmptyFacet ? Math.ceil((filterByFacets.length / 9)) : Math.ceil((filterByCollection.length / 9)) || 0
+    //    If there is no filter, return hits from facets, else if there is not collection, return hits from collection, else return hits from filter
+    const allHits = !isEmptyFacet ? filterByFacets || [] : filteredProducts.categories === '' ? hitsSelect : filterByCollection || []
+
+    //    Filter hits if there is a query in the search bar & searchParams
+    const withQuery = allHits.filter((product) => product.title.toLowerCase().includes(query.toLowerCase()) || product.description.toLowerCase().includes(query.toLowerCase()) )
+
+    //    If query is empty, return filtered allHits, else return filtered withQuery 9 per page for each condition. (For pagination)
+    const hits = query.trim() === '' ? allHits.slice((page - 1) * 9, page * 9) as PlatformProduct[] : withQuery.slice((page - 1) * 9, page * 9) as PlatformProduct[]
+    const totalPages = !isEmptyFacet ? Math.ceil((filterByFacets.length / 9)) : filteredProducts.categories === '' ? Math.ceil((hitsSelect.length / 9)) || 0 : Math.ceil((filterByCollection.length / 9)) || 0
+
     const facetDistribution = convertedFacet
     const totalHits = isEmptyFacet ? hitsSelect.length : filterByFacets.length
 
-    return {
-      hits,
-      totalPages,
-      facetDistribution,
-      totalHits
-    }
+    return { hits, totalPages, facetDistribution, totalHits }
   },
   ['products-search'],
   { revalidate: 3600 }
 )
 
+export const searchProductsAutocomplete = unstable_cache(
+  async (query: string, limit: number = 4) => {
+    const queryWords = query.split(' ').join(' & ') + ':*'
+
+    const hitsSelect: PlatformProduct[] = await db
+    .select()
+    .from(platformProduct)
+    .where(
+      sql`to_tsvector('simple', lower(${platformProduct.title} || ' ' || 
+      ${platformProduct.description})) @@ to_tsquery('simple', 
+      ${queryWords})`
+    ).limit(limit)
+
+    const hasMore = hitsSelect?.length > 6
+
+    return { hits: hitsSelect, hasMore }
+  },
+  ['autocomplete-search'],
+  { revalidate: 3600 }
+)
+
 export const getProductsUnderCertainPrice = unstable_cache(
   async (price: number, limit: number = 8) => {
-    // if (isDemoMode()) return getDemoProducts().hits.slice(0, 8)
-
     const results: SelectplatformProduct[] = await db.select().from(platformProduct).where(lte(platformProduct.minPrice, price)).limit(limit)
 
     return results as PlatformProduct[] || []
@@ -104,14 +132,6 @@ export const getProduct = unstable_cache(
 )
 
 
-export const searchProduct = unstable_cache(
-  async (query: string, limit: number = 4) => {
-    const reponse = await storefrontClient.searchProducts(query, limit)
-
-    return reponse
-})
-
-
 export const getProductRecommendations = unstable_cache(
   async (id: string) => {
     const response = await storefrontClient.getProductRecommendations(id)
@@ -120,42 +140,4 @@ export const getProductRecommendations = unstable_cache(
   },
   ['product-recommendations'],
   { revalidate: 3600 }
-)
-
-interface SearchProductsResult {
-  hits: SelectplatformProduct[];
-  hasMore: boolean;
-}
-
-export const searchProductsAuto = unstable_cache(
-  async (query: string, limit: number = 4): Promise<SearchProductsResult> => {
-    const hitsSelect: SelectplatformProduct[] = await db.select().from(platformProduct)
-
-    const hasMore = hitsSelect?.length > limit
-
-    return { hits: hitsSelect, hasMore }
-  },
-  ['autocomplete-search'],
-  { revalidate: 3600 }
-)
-
-export const predictiveSearch = unstable_cache(async (query: string, first: number, limitScope: 'EACH' | 'ALL') => {
-  const response = await storefrontClient.getPredictiveSearchResults(query, first, limitScope)
-  // const compareHasMore = (await storefrontClient.getPredictiveSearchResults(query, first, 'EACH')).products?.length
-
-  // const { collections, querySuggestion, pages } = response
-
-  // if (!response.products) return { hits: [] }
-  // if (!compareHasMore) return { hasMore: false }
-
-  // const hits = response.products.map(({id, title, handle, featuredImage, images, variants}) => ({id, title, handle, featuredImage, images, variants}))
-
-  // const hasMore = hits?.length > compareHasMore
-
-
-
-  return response
-},
-['autocomplete-search'],
-{ revalidate: 3600 }
 )
