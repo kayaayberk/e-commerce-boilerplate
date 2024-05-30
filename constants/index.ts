@@ -3,6 +3,7 @@ import Fashion1 from '@/public/NavPlaceholders/Fashion-1.webp'
 import Fashion2 from '@/public/NavPlaceholders/Fashion-2.webp'
 import Fashion3 from '@/public/NavPlaceholders/Fashion-3.webp'
 import Fashion4 from '@/public/NavPlaceholders/Fashion-4.webp'
+import SkinCare1 from '@/public/NavPlaceholders/Skin-Care-1.webp'
 
 export const COOKIE_CART_ID = 'ecom_cartId'
 
@@ -27,7 +28,7 @@ export const navigationItems: NavTrigger[] = [
   },
   {
     text: 'Fashion',
-    href: '/category/fashion',
+    href: '/category/clothing',
     submenu: {
       variant: 'text-grid',
       items: [
@@ -62,37 +63,37 @@ export const navigationItems: NavTrigger[] = [
     },
   },
   {
-    text: 'Electronics',
-    href: '/category/electronics',
+    text: 'Accessories',
+    href: '/category/accessories',
     submenu: {
       variant: 'image-grid',
       items: [
         {
-          href: '/category/electronics',
+          href: '/category/accessories?tags=Bags',
           image: Fashion1,
-          text: 'Best Offers',
+          text: 'Bags',
         },
         {
-          href: '/category/electronics',
-          image: Fashion2,
-          text: 'New',
-        },
-        {
-          href: '/category/electronics',
+          href: '/category/accessories?tags=Accessories',
           image: Fashion3,
-          text: 'Holiday',
+          text: 'Accessories',
         },
         {
-          href: '/category/electronics',
-          image: Fashion4,
-          text: 'Sale',
+          href: '/category/accessories?tags=Footwear',
+          image: Fashion2,
+          text: 'Footwear',
+        },
+        {
+          href: '/category/skin-care',
+          image: SkinCare1,
+          text: 'Skin Care',
         },
       ],
     },
   },
   {
     text: 'Beauty',
-    href: '/category/beauty',
+    href: '/category/skin-care',
     submenu: {
       variant: 'text-image-grid',
       items: [
@@ -113,6 +114,11 @@ export const navigationItems: NavTrigger[] = [
           href: '#',
           image: Fashion2,
           text: 'Beauty',
+        },
+        {
+          href: '#',
+          image: Fashion3,
+          text: 'Holiday',
         },
         {
           href: '#',

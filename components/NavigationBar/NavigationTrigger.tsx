@@ -1,12 +1,17 @@
-import Link from 'next/link'
-import { NavigationMenuLink, NavigationMenuTrigger } from '../ui/navigation-menu'
+import { NavigationMenuTrigger, navigationMenuTriggerStyle } from '../ui/navigation-menu'
 import { type NavTrigger } from './types'
+import { Button } from '../ui/button'
+import { cn } from '@/lib/utils'
+import Link from 'next/link'
 
 export function NavigationTrigger({ trigger }: { trigger: NavTrigger }) {
-  console.log('trigger', trigger)
   return (
     <Link href={trigger.href}>
-      <NavigationMenuTrigger>{trigger.text}</NavigationMenuTrigger>
+      {trigger.submenu ? (
+        <NavigationMenuTrigger>{trigger.text}</NavigationMenuTrigger>
+      ) : (
+        <Button className={cn(navigationMenuTriggerStyle(), 'text-blck')}>{trigger.text}</Button>
+      )}
     </Link>
   )
 }

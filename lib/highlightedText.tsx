@@ -18,6 +18,6 @@ export function getHighlightedText(text: string, highlight: string) {
   )
 }
 
-function escapeRegExp(value: string) {
+export function escapeRegExp(value: string) {
   return value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&") // $& means the whole matched string
 }
