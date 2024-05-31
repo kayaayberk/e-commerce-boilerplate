@@ -19,7 +19,7 @@ export async function generateMetadata({ params: { slug } }: ProductProps): Prom
   const lastCollection = product?.collections?.findLast(Boolean)
 
   return {
-    metadataBase: new URL(env.LIVE_HEADLESS_URL!), // TODO: CHANGE THIS TO LIVE URL
+    metadataBase: new URL(env.LIVE_URL!),
     title: `${originalTitle || product?.title} | Blazity`,
     description: originalDescription || product?.description,
     generator: 'Next.js',
@@ -58,7 +58,7 @@ export function generateJsonLd(product: PlatformProduct, slug: string) {
     },
     offers: {
       '@type': 'Offer',
-      url: `${env.LIVE_HEADLESS_URL}/products/${slug}`,
+      url: `${env.LIVE_URL}/products/${slug}`,
       itemCondition: 'https://schema.org/NewCondition',
       availability: 'https://schema.org/InStock',
       price: product.priceRange.minVariantPrice.amount,
