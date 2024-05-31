@@ -1,4 +1,4 @@
-import GeneratedBloomFilter from './redirects/bloom-filter.json'
+import GeneratedBloomFilter from '@/redirects/bloom-filter.json'
 import { NextRequest, NextResponse } from 'next/server'
 import { BUCKETS, facetParams } from 'constants/index'
 import { ScalableBloomFilter } from 'bloom-filters'

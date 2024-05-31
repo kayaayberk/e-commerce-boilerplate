@@ -1,0 +1,34 @@
+{
+  "type": "ScalableBloomFilter",
+  "_initial_size": 1,
+  "_error_rate": 0.0001,
+  "_ratio": 0.5,
+  "_filters": [
+    {
+      "type": "PartitionedBloomFilter",
+      "_size": 20,
+      "_nbHashes": 14,
+      "_loadFactor": 0.5,
+      "_m": 2,
+      "_filter": [
+        { "size": 8, "content": "AQ==" },
+        { "size": 8, "content": "Ag==" },
+        { "size": 8, "content": "Ag==" },
+        { "size": 8, "content": "Ag==" },
+        { "size": 8, "content": "AQ==" },
+        { "size": 8, "content": "Ag==" },
+        { "size": 8, "content": "Ag==" },
+        { "size": 8, "content": "Ag==" },
+        { "size": 8, "content": "AQ==" },
+        { "size": 8, "content": "Ag==" },
+        { "size": 8, "content": "Ag==" },
+        { "size": 8, "content": "Ag==" },
+        { "size": 8, "content": "AQ==" },
+        { "size": 8, "content": "Ag==" }
+      ],
+      "_capacity": 1,
+      "_seed": 78187493520
+    }
+  ],
+  "_seed": 78187493520
+}
