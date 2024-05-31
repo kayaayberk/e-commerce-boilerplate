@@ -47,7 +47,7 @@ async function migrate() {
   }
 
   console.log({ status: 'INFO', message: 'Subscribing PRODUCT_FEEDS_FULL_SYNC webhook...' })
-  const fetchedWebhookMutation = await client.subscribeWebhook('PRODUCT_FEEDS_FULL_SYNC' as WebhookSubscriptionTopic, `${process.env.LIVE_HEADLESS_URL}/api/sync`)
+  const fetchedWebhookMutation = await client.subscribeWebhook('PRODUCT_FEEDS_FULL_SYNC' as WebhookSubscriptionTopic, `${process.env.LIVE_URL}/api/sync`)
   const webhookServerError = fetchedWebhookMutation?.errors?.graphQLErrors?.find(Boolean)?.message
   const webhookUserErrror =
     fetchedWebhookMutation?.data?.webhookSubscriptionCreate?.userErrors?.find(Boolean)?.message
@@ -82,7 +82,7 @@ async function migrate() {
   console.log({status: 'SUCCESS', message: 'Full sync mode started. Migration should start in a few seconds'})
   console.log({ status: 'INFO', message: 'Subscribing PRODUCT_FEEDS_INCREMENTAL_SYNC webhook...'})
 
-  const incrementalWebhook = await client.subscribeWebhook('PRODUCT_FEEDS_INCREMENTAL_SYNC' as WebhookSubscriptionTopic, `${process.env.LIVE_HEADLESS_URL}/api/sync`)
+  const incrementalWebhook = await client.subscribeWebhook('PRODUCT_FEEDS_INCREMENTAL_SYNC' as WebhookSubscriptionTopic, `${process.env.LIVE_URL}/api/sync`)
 
   console.log({status: 'SUCCESS', message: 'Successfully subscribed to PRODUCT_FEEDS_INCREMENTAL_SYNC webhook'})
 
@@ -96,7 +96,7 @@ async function migrate() {
     return
   }
 
-  const collectionWebhook = await client.subscribeWebhook('COLLECTIONS_UPDATE' as WebhookSubscriptionTopic, `${process.env.LIVE_HEADLESS_URL}/api/sync`)
+  const collectionWebhook = await client.subscribeWebhook('COLLECTIONS_UPDATE' as WebhookSubscriptionTopic, `${process.env.LIVE_URL}/api/sync`)
 
   console.log({status: 'SUCCESS', message: 'Successfully subscribed to COLLECTIONS_UPDATE webhook'})
   const collectionWebhookServerError =
