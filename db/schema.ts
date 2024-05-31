@@ -20,7 +20,7 @@ export const platformProduct = pgTable('platformProduct', {
   updatedAtTimestamp: integer('updatedAtTimestamp').$type<number>().notNull(),
   createdAtTimestamp: integer('createdAtTimestamp').$type<number>().notNull(),
   flatOptions: jsonb('flatOptions').$type<Record<string, string[]>>().notNull(),
-  collections: jsonb('collections').$type<PlatformCollection[]>().notNull(),
+  collections: jsonb('collections').$type<Pick<PlatformCollection, "handle" | "id" | "title">[]>().notNull(),
   seo: jsonb('seo').$type<{ description?: string | null | undefined; title?: string | null | undefined }>().notNull(),
 })
 
