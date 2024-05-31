@@ -21,7 +21,8 @@ export async function addCartItem(prevState: any, variantId: string) {
 
   if (!cartId || !cart) {
     cart = await storefrontClient.createCart([])
-    cartId = cart?.id
+    if (!cart) return { ok: false }
+    cartId = cart.id
     cartId && cookies().set(COOKIE_CART_ID, cartId)
 
     revalidateTag(TAGS.CART)
