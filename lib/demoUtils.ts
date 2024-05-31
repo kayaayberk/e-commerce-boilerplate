@@ -33,8 +33,6 @@ export function isDemoMode(): boolean {
     SHOPIFY_ADMIN_ACCESS_TOKEN,
     SHOPIFY_APP_API_SECRET_KEY,
     SHOPIFY_STORE_DOMAIN,
-    MEILISEARCH_HOST,
-    MEILISEARCH_MASTER_KEY,
     LIVE_URL,
     IS_DEMO_MODE,
   } = process.env
@@ -44,8 +42,6 @@ export function isDemoMode(): boolean {
     isDemoValue(SHOPIFY_ADMIN_ACCESS_TOKEN) ||
     isDemoValue(SHOPIFY_APP_API_SECRET_KEY) ||
     isDemoValue(SHOPIFY_STORE_DOMAIN) ||
-    isDemoValue(MEILISEARCH_HOST) ||
-    isDemoValue(MEILISEARCH_MASTER_KEY) ||
     !LIVE_URL ||
     IS_DEMO_MODE === "true"
   )
