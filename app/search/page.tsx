@@ -9,7 +9,7 @@ export const metadata: Metadata = {
   description: 'In excepteur elit mollit in.',
 }
 
-export const runtime = 'edge'
+export const runtime = 'nodejs'
 
 export const revalidate = 3600
 
