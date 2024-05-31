@@ -3,7 +3,7 @@ import { CategoriesDistribution } from '@/views/ProductListing/FacetsDesktop'
 
 interface Item {
   [key: string]: any
-  collections: PlatformCollection[]
+  collections: Pick<PlatformCollection, "handle" | "id" | "title">[]
   tags: string[]
   vendor: string
   variants: PlatformVariant[]
